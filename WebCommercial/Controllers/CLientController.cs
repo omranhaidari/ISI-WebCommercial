@@ -22,9 +22,11 @@ namespace WebApplication1.Controllers
             catch (MonException e)
             {
                 ModelState.AddModelError("Erreur", "Erreur lors de la récupération des clients : " + e.Message);
+                ViewBag.Message = "Liste des clients";
                 return View("Error");
             }
 
+            ViewBag.Title = "Liste des clients";
             return View(clients);
         }
 
@@ -34,6 +36,7 @@ namespace WebApplication1.Controllers
             try
             {
                 Clientel unCl = Clientel.getClient(id);
+                ViewBag.Title = "Modifier";
                 return View(unCl);
             }
             catch (MonException e)
@@ -51,6 +54,7 @@ namespace WebApplication1.Controllers
                //  String s= Request["Societe"];
 
                 Clientel.updateClient(unC);
+                ViewBag.Title = "Modifier";
                 return View();
             }
             catch (MonException e)
