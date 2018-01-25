@@ -1,0 +1,53 @@
+﻿<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.ActionLink("Polytech Commercial", "", "", new { area = "" }, new { @class = "navbar-brand" })
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fichier<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Application</li>
+                        <li class="dropdown-header">----------</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="/LogOut">Quitter</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Interroger<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Fiches</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Liste des Clients", "Index", "Client")</li>
+                        <li><a href="#">Fiche Vendeur</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Commandes</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Liste des commandes</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gérer<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="dropdown-header">Gestion</li>
+                        <li role="separator" class="divider"></li>
+                        <li>@Html.ActionLink("Ajouter Client", "Ajouter", "Client")</li>
+                        <li><a href="#">Modifier Article</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li class="dropdown-header">Produits</li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Augmenter Prix</a></li>
+                    </ul>
+                </li>
+                <li>@Html.ActionLink("À propos de", "About", "Home")</li>
+                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+            </ul>
+        </div>
+    </div>
+</div>

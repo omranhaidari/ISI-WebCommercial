@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Linq;
 using System.Web;
@@ -12,7 +13,6 @@ namespace WebCommercial.Models.Metier
     public class Clientel
     {
         //Definition des attributs
-
         private String noClient;
         private String societe;
         private String nomCl;
@@ -24,42 +24,56 @@ namespace WebCommercial.Models.Metier
 
         //Definition des properties
 
+        [Display(Name = "Société")]
+        [Required(ErrorMessage = "Le nom de la société doit être saisi")]
         public String Societe
         {
             get { return societe; }
             set { societe = value; }
         }
 
+        [Display(Name = "Nom Client")]
+        [Required(ErrorMessage = "Le nom du client doit être saisi")]
         public String NomCl
         {
             get { return nomCl; }
             set { nomCl = value; }
         }
 
+        [Display(Name = "N° Client")]
+        [Required(ErrorMessage = "L'identifiant doit être valide")]
         public String NoClient
         {
             get { return noClient; }
             set { noClient = value; }
         }
 
+        [Display(Name = "Prénom Client")]
+        [Required(ErrorMessage = "Le prénom du client doit être saisi")]
         public String PrenomCl
         {
             get { return prenomCl; }
             set { prenomCl = value; }
         }
 
+        [Display(Name = "Adresse Client")]
+        [Required(ErrorMessage = "L'adresse du client doit être saisie")]
         public String AdresseCl
         {
             get { return adresseCl; }
             set { adresseCl = value; }
         }
 
+        [Display(Name = "Ville Client")]
+        [Required(ErrorMessage = "La ville du client doit être saisie")]
         public String VilleCl
         {
             get { return villeCl; }
             set { villeCl = value; }
         }
 
+        [Display(Name = "Code Postal Client")]
+        [Required(ErrorMessage = "Le code postal du client doit être saisi")]
         public String CodePostCl
         {
             get { return codePostCl; }
@@ -231,6 +245,31 @@ namespace WebCommercial.Models.Metier
                 throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
             }
 
+        }
+
+        public static void insertClient(Clientel unCli)
+        {
+            Serreurs er = new Serreurs("Erreur sur la création d'un client.", "Client.insert()");
+            String requete = "INSERT INTO Clientel (no_client, societe, nom_cl, prenom_cl, adresse_cl, ville_cl, code_post_cl) VALUES " +
+                                    "('" + unCli.NoClient + "'" +
+                                    ",'" + unCli.Societe + "'" +
+                                    ",'" + unCli.NomCl + "'" +
+                                    ",'" + unCli.PrenomCl + "'" +
+                                    ",'" + unCli.AdresseCl + "'" +
+                                    ",'" + unCli.VilleCl + "'" +
+                                    ",'" + unCli.CodePostCl + "')";
+            try
+            {
+                DBInterface.Insertion_Donnees(requete);
+            }
+            catch (MonException erreur)
+            {
+                throw erreur;
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
         }
     }
 }

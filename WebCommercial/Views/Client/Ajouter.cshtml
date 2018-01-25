@@ -1,7 +1,6 @@
 ﻿
-
-
 @model  WebCommercial.Models.Metier.Clientel
+
 
 @{
     Layout = "~/Views/Shared/_LayoutCommercial.cshtml";
@@ -9,7 +8,7 @@
 <div class="container">
     <div class="col-md-10 col-sm-10">
         <div class="blanc">
-            <h1>Modifier un client</h1>
+            <h1>Ajouter un client</h1>
         </div>
 
         <div class="row">
@@ -18,13 +17,7 @@
             </div>
         </div>
 
-        @if (Model != null)
-        {
-
-            @Html.Partial("InformationsClient", Model)
-
-        }
+        @Html.Partial("InformationsClient", Model)
 
     </div>
 </div>
-

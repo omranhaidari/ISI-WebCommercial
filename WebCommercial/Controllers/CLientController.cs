@@ -48,6 +48,12 @@ namespace WebApplication1.Controllers
         [HttpPost]
         public ActionResult Modifier(Clientel unC)
         {
+            if (!ModelState.IsValid)
+            {
+                // Si le client modifié n'est pas valide, on affiche un message d'erreur à l'utilisateur
+                return View(unC);
+            }
+                
             try
             {
                 // utilisation possible de Request
@@ -55,11 +61,59 @@ namespace WebApplication1.Controllers
 
                 Clientel.updateClient(unC);
                 ViewBag.Title = "Modifier";
+
+                return RedirectToAction("Index");
+            }
+            catch (MonException e)
+            {
+                return HttpNotFound();
+            }
+        }
+
+        public ActionResult Ajouter()
+        {
+            try
+            {
+                ViewBag.Title = "Ajouter un client";
                 return View();
             }
             catch (MonException e)
             {
                 return HttpNotFound();
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Ajouter(Clientel unC)
+        {
+            /*List<String> mesNumeros;
+            int num;
+
+            // Test pour savoir quel ID on peut donner au client créé
+            try
+            {
+                mesNumeros = Clientel.LectureNoClient();
+                if(int.TryParse(mesNumeros.Last(), out num))
+                {
+                    num++;
+                }
+            }*/
+
+            unC.NoClient = "000269";
+
+            try
+            {
+                // utilisation possible de Request
+                //  String s= Request["Societe"];
+
+                Clientel.insertClient(unC);
+                ViewBag.Title = "Ajouter un client";
+
+                return RedirectToAction("Index");
+            }
+            catch (MonException e)
+            {
+                return View(unC);
             }
         }
     }

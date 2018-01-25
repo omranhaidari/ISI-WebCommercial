@@ -1,0 +1,24 @@
+﻿
+@model  WebCommercial.Models.Metier.Clientel
+
+<tr>
+    <td>@Html.DisplayFor(modelItem => Model.NoClient)</td>
+    <td>@Html.DisplayFor(modelItem => Model.Societe)</td>
+    <td> @Html.DisplayFor(modelItem => Model.NomCl) </td>
+
+    <td>@Html.DisplayFor(modelItem => Model.PrenomCl)</td>
+    <td> @Html.DisplayFor(modelItem => Model.AdresseCl) </td>
+
+    <td>@Html.DisplayFor(modelItem => Model.CodePostCl)</td>
+    <td>@Html.DisplayFor(modelItem => Model.VilleCl) </td>
+    <td style="text-align:center;">
+        <span>
+            @Html.ActionLink("  ", "Modifier", "Client", new { id = Model.NoClient }, new { @class = "btn btn-default btn-primary glyphicon glyphicon glyphicon-pencil" })
+        </span>
+    </td>
+    <td style="text-align:center;">
+        <span>
+            @Html.ActionLink("  ", "Supprimer", "Client", new { id = Model.NoClient }, new { @class = "btn btn-default btn-danger glyphicon glyphicon glyphicon-remove" })
+        </span>
+    </td>
+</tr> 
