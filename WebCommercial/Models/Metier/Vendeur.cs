@@ -10,153 +10,135 @@ using WebCommercial.Models.Persistance.WebApplication1.Models.Persistance;
 
 namespace WebCommercial.Models.Metier
 {
-    public class Clientel
+    public class Vendeur
     {
         //Definition des attributs
-        private int noClient;
-        private String societe;
-        private String nomCl;
-        private String prenomCl;
-        private String adresseCl;
-        private String villeCl;
-        private String codePostCl;
+        private int noVendeur;
+        private int noChefEquipe;
+        private String nomVen;
+        private String prenomVen;
+        private DateTime dateEmbauche;
+        private String villeVen;
+        private float salaire;
+        private float comm;
 
 
         //Definition des properties
 
-        [Display(Name = "Société")]
-        [Required(ErrorMessage = "Le nom de la société doit être saisi")]
-        public String Societe
-        {
-            get { return societe; }
-            set { societe = value; }
-        }
-
-        [Display(Name = "Nom Client")]
-        [Required(ErrorMessage = "Le nom du client doit être saisi")]
-        public String NomCl
-        {
-            get { return nomCl; }
-            set { nomCl = value; }
-        }
-
-        [Display(Name = "N° Client")]
+        [Display(Name = "N° Vendeur")]
         [Required(ErrorMessage = "L'identifiant doit être valide")]
-        public int NoClient
+        public int NoVendeur
         {
-            get { return noClient; }
-            set { noClient = value; }
+            get { return noVendeur; }
+            set { noVendeur = value; }
         }
 
-        [Display(Name = "Prénom Client")]
+        [Display(Name = "N° Chef d'équipe")]
+        [Required(ErrorMessage = "L'identifiant doit être valide")]
+        public int NoChef
+        {
+            get { return noChefEquipe; }
+            set { noChefEquipe = value; }
+        }
+
+        [Display(Name = "Nom Vendeur")]
+        [Required(ErrorMessage = "Le nom du vendeur doit être saisi")]
+        public String NomVendeur
+        {
+            get { return nomVen; }
+            set { nomVen = value; }
+        }
+
+        [Display(Name = "Prénom Vendeur")]
         [Required(ErrorMessage = "Le prénom du client doit être saisi")]
-        public String PrenomCl
+        public String PrenomVendeur
         {
-            get { return prenomCl; }
-            set { prenomCl = value; }
+            get { return prenomVen; }
+            set { prenomVen = value; }
         }
 
-        [Display(Name = "Adresse Client")]
-        [Required(ErrorMessage = "L'adresse du client doit être saisie")]
-        public String AdresseCl
+        [Display(Name = "Date d'embauche Vendeur")]
+        [Required(ErrorMessage = "La date doit être valide")]
+        public DateTime DateEmbauche
         {
-            get { return adresseCl; }
-            set { adresseCl = value; }
+            get { return dateEmbauche; }
+            set { dateEmbauche = value; }
         }
 
-        [Display(Name = "Ville Client")]
+        [Display(Name = "Ville Vendeur")]
         [Required(ErrorMessage = "La ville du client doit être saisie")]
-        public String VilleCl
+        public String VilleVendeur
         {
-            get { return villeCl; }
-            set { villeCl = value; }
+            get { return villeVen; }
+            set { villeVen = value; }
         }
 
-        [Display(Name = "Code Postal Client")]
-        [Required(ErrorMessage = "Le code postal du client doit être saisi")]
-        public String CodePostCl
+        [Display(Name = "Salaire Vendeur")]
+        [Required(ErrorMessage = "Le montant doit être valide")]
+        public float Salaire
         {
-            get { return codePostCl; }
-            set { codePostCl = value; }
+            get { return salaire; }
+            set { salaire = value; }
         }
 
+        [Display(Name = "Commission Vendeur")]
+        [Required(ErrorMessage = "Le montant doit être valide")]
+        public float Commission
+        {
+            get { return comm; }
+            set { comm = value; }
+        }
 
         /// <summary>
         /// Initialisation
         /// </summary>
-        public Clientel()
+        public Vendeur()
         {
-            noClient = 0;
-            societe = "";
-            nomCl = "";
-            prenomCl = "";
-            adresseCl = "";
-            villeCl = "";
-            codePostCl = "";
+            noVendeur = 0;
+            noChefEquipe = 0;
+            nomVen = "";
+            prenomVen = "";
+            dateEmbauche = new DateTime();
+            villeVen = "";
+            salaire = 0;
+            comm = 0;
         }
         /// <summary>
         /// Initialisation avec les paramètres
         /// </summary>
-        public Clientel(int no, string soc, string nom, string prenom, string adresse, string ville, String codePostal)
+        public Vendeur(int no, int no_chef, string nom, string prenom, DateTime embauche, string ville, float sal, float com)
         {
-            noClient = no;
-            societe = soc;
-            nomCl = nom;
-            prenomCl = prenom;
-            adresseCl = adresse;
-            villeCl = ville;
-            codePostCl = codePostal;
-        }
-
-        /// <summary>
-        /// Lister les clients de la base
-        /// </summary>
-        /// <returns>Liste de numéros de clients</returns>
-        public static List<String> LectureNoClient()
-        {
-            List<String> mesNumeros = new List<String>();
-            DataTable dt;
-            Serreurs er = new Serreurs("Erreur sur lecture du client.", "Clientel.LectureNoClient()");
-            try
-            {
-
-                String mysql = "SELECT DISTINCT NO_CLIENT FROM clientel ORDER BY NO_CLIENT";
-                dt = DBInterface.Lecture(mysql, er);
-
-                foreach (DataRow dataRow in dt.Rows)
-                {
-                    mesNumeros.Add((dataRow[0]).ToString());
-                }
-
-                return mesNumeros;
-            }
-            catch (MySqlException e)
-            {
-                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
-            }
+            noVendeur = no;
+            noChefEquipe = no_chef;
+            nomVen = nom;
+            prenomVen = prenom;
+            dateEmbauche = embauche;
+            villeVen = ville;
+            salaire = sal;
+            comm = com;
         }
 
         /// <summary>
         /// Lire un utilisateur sur son ID
         /// </summary>
         /// <param name="numCli">N° de l'utilisateur à lire</param>
-        public static Clientel getClient(int numCli)
+        public static Vendeur getVendeur(int numVen)
         {
 
             String mysql;
             DataTable dt;
-            Serreurs er = new Serreurs("Erreur sur recherche d'un client.", "Client.RechercheUnClient()");
+            Serreurs er = new Serreurs("Erreur sur recherche d'un vendeur.", "Vendeur.RechercheUnVendeur()");
             try
             {
 
                 mysql = "SELECT SOCIETE, NOM_CL, PRENOM_CL,";
                 mysql += "ADRESSE_CL, VILLE_CL, CODE_POST_CL ";
-                mysql += "FROM clientel WHERE NO_CLIENT = " + numCli;
+                mysql += "FROM Vendeur WHERE NO_CLIENT = " + numCli;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
                 {
-                    Clientel client = new Clientel();
+                    Vendeur client = new Vendeur();
                     DataRow dataRow = dt.Rows[0];
                     client.NoClient = numCli;
                     client.NomCl = dataRow[1].ToString();
@@ -178,22 +160,22 @@ namespace WebCommercial.Models.Metier
 
         }
 
-        public static IEnumerable<Clientel> getClients()
+        public static IEnumerable<Vendeur> getClients()
         {
-            IEnumerable<Clientel> clients = new List<Clientel>();
+            IEnumerable<Vendeur> clients = new List<Vendeur>();
             DataTable dt;
-            Clientel client;
+            Vendeur client;
             Serreurs er = new Serreurs("Erreur sur lecture des clients.", "ClientsList.getClients()");
             try
             {
                 String mysql = "SELECT SOCIETE, NOM_CL, PRENOM_CL, ADRESSE_CL, VILLE_CL, CODE_POST_CL, " +
-                               "NO_CLIENT FROM clientel ORDER BY NO_CLIENT";
+                               "NO_CLIENT FROM Vendeur ORDER BY NO_CLIENT";
 
                 dt = DBInterface.Lecture(mysql, er);
 
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    client = new Clientel();
+                    client = new Vendeur();
                     client.NoClient = int.Parse(dataRow[6].ToString());
                     client.NomCl = dataRow[1].ToString();
                     client.Societe = dataRow[0].ToString();
@@ -202,7 +184,7 @@ namespace WebCommercial.Models.Metier
                     client.VilleCl = dataRow[4].ToString();
                     client.CodePostCl = dataRow[5].ToString();
 
-                    ((List<Clientel>)clients).Add(client);
+                    ((List<Vendeur>)clients).Add(client);
                 }
 
                 return clients;
@@ -221,10 +203,10 @@ namespace WebCommercial.Models.Metier
         /// mise à jour d'un client sur son ID
         /// </summary>
         /// <param name="numCli">N° de l'utilisateur à lire</param>
-        public static void updateClient(Clientel unCli)
+        public static void updateClient(Vendeur unCli)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un client.", "Client.update()");
-            String requete = "UPDATE Clientel SET " +
+            String requete = "UPDATE Vendeur SET " +
                                   "SOCIETE = '" + unCli.Societe + "'" +
                                   ", NOM_CL = '" + unCli.NomCl + "'" +
                                   ", PRENOM_CL = '" + unCli.PrenomCl + "'" +
@@ -247,10 +229,10 @@ namespace WebCommercial.Models.Metier
 
         }
 
-        public static void insertClient(Clientel unCli)
+        public static void insertClient(Vendeur unCli)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un client.", "Client.insert()");
-            String requete = "INSERT INTO Clientel (no_client, societe, nom_cl, prenom_cl, adresse_cl, ville_cl, code_post_cl) VALUES " +
+            String requete = "INSERT INTO Vendeur (no_client, societe, nom_cl, prenom_cl, adresse_cl, ville_cl, code_post_cl) VALUES " +
                                     "('" + unCli.NoClient + "'" +
                                     ",'" + unCli.Societe + "'" +
                                     ",'" + unCli.NomCl + "'" +

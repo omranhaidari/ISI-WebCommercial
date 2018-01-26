@@ -153,6 +153,7 @@
     </Compile>
     <Compile Include="Models\MesExceptions\MonException.cs" />
     <Compile Include="Models\MesExceptions\Serreurs.cs" />
+    <Compile Include="Models\Metier\Vendeur.cs" />
     <Compile Include="Models\Metier\Clientel.cs" />
     <Compile Include="Models\Persistance\Connexion.cs" />
     <Compile Include="Models\Persistance\DBInterface.cs" />

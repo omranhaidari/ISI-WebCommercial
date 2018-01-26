@@ -31,7 +31,7 @@ namespace WebApplication1.Controllers
         }
 
         // GET: Commande/Edit/5
-        public ActionResult Modifier(string id)
+        public ActionResult Modifier(int id)
         {
             try
             {
@@ -98,8 +98,6 @@ namespace WebApplication1.Controllers
                     num++;
                 }
             }*/
-
-            unC.NoClient = "000269";
 
             try
             {
