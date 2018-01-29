@@ -121,7 +121,7 @@ namespace WebCommercial.Models.Metier
         /// <summary>
         /// Lire un utilisateur sur son ID
         /// </summary>
-        /// <param name="numCli">N° de l'utilisateur à lire</param>
+        /// <param name="numVen">N° de l'utilisateur à lire</param>
         public static Vendeur getVendeur(int numVen)
         {
 
@@ -131,24 +131,25 @@ namespace WebCommercial.Models.Metier
             try
             {
 
-                mysql = "SELECT SOCIETE, NOM_CL, PRENOM_CL,";
-                mysql += "ADRESSE_CL, VILLE_CL, CODE_POST_CL ";
-                mysql += "FROM Vendeur WHERE NO_CLIENT = " + numCli;
+                mysql = "SELECT NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND,";
+                mysql += "DATE_EMBAU, VILLE_VEND, SALAIRE_VEND, COMMISSION ";
+                mysql += "FROM Vendeur WHERE NO_VENDEUR = " + numVen;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
                 {
-                    Vendeur client = new Vendeur();
+                    Vendeur vendeur = new Vendeur();
                     DataRow dataRow = dt.Rows[0];
-                    client.NoClient = numCli;
-                    client.NomCl = dataRow[1].ToString();
-                    client.Societe = dataRow[0].ToString();
-                    client.PrenomCl = dataRow[2].ToString();
-                    client.AdresseCl = dataRow[3].ToString();
-                    client.VilleCl = dataRow[4].ToString();
-                    client.CodePostCl = dataRow[5].ToString();
+                    vendeur.NoVendeur = numVen;
+                    vendeur.NoChef = int.Parse(dataRow[0].ToString());
+                    vendeur.NomVendeur = dataRow[1].ToString();
+                    vendeur.PrenomVendeur = dataRow[2].ToString();
+                    vendeur.DateEmbauche = DateTime.Parse(dataRow[3].ToString());
+                    vendeur.VilleVendeur = dataRow[4].ToString();
+                    vendeur.Salaire = float.Parse(dataRow[5].ToString());
+                    vendeur.Commission = float.Parse(dataRow[6].ToString());
 
-                    return client;
+                    return vendeur;
                 }
                 else
                     return null;
@@ -160,34 +161,41 @@ namespace WebCommercial.Models.Metier
 
         }
 
-        public static IEnumerable<Vendeur> getClients()
+        public static Vendeur authentifier(String login, String pwd)
         {
-            IEnumerable<Vendeur> clients = new List<Vendeur>();
+            // Pour simplifier le débug, on authentifie un vendeur avec son simple ID (sans mot de passe)
+            return getVendeur(int.Parse(login));
+        }
+
+        public static IEnumerable<Vendeur> getVendeurs()
+        {
+            IEnumerable<Vendeur> vendeurs = new List<Vendeur>();
             DataTable dt;
-            Vendeur client;
-            Serreurs er = new Serreurs("Erreur sur lecture des clients.", "ClientsList.getClients()");
+            Vendeur vendeur;
+            Serreurs er = new Serreurs("Erreur sur lecture des vendeurs.", "VendeursList.getVendeurs()");
             try
             {
-                String mysql = "SELECT SOCIETE, NOM_CL, PRENOM_CL, ADRESSE_CL, VILLE_CL, CODE_POST_CL, " +
-                               "NO_CLIENT FROM Vendeur ORDER BY NO_CLIENT";
+                String mysql = "SELECT NO_VENDEUR,NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND,DATE_EMBAU," +
+                               "VILLE_VEND,SALAIRE_VEND,COMMISSION FROM Vendeur ORDER BY NO_VENDEUR";
 
                 dt = DBInterface.Lecture(mysql, er);
 
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    client = new Vendeur();
-                    client.NoClient = int.Parse(dataRow[6].ToString());
-                    client.NomCl = dataRow[1].ToString();
-                    client.Societe = dataRow[0].ToString();
-                    client.PrenomCl = dataRow[2].ToString();
-                    client.AdresseCl = dataRow[3].ToString();
-                    client.VilleCl = dataRow[4].ToString();
-                    client.CodePostCl = dataRow[5].ToString();
+                    vendeur = new Vendeur();
+                    vendeur.NoVendeur = int.Parse(dataRow[0].ToString());
+                    vendeur.NoChef = int.Parse(dataRow[1].ToString());
+                    vendeur.NomVendeur = dataRow[2].ToString();
+                    vendeur.PrenomVendeur = dataRow[3].ToString();
+                    vendeur.DateEmbauche = DateTime.Parse(dataRow[4].ToString());
+                    vendeur.VilleVendeur = dataRow[5].ToString();
+                    vendeur.Salaire = float.Parse(dataRow[6].ToString());
+                    vendeur.Commission = float.Parse(dataRow[7].ToString());
 
-                    ((List<Vendeur>)clients).Add(client);
+                    ((List<Vendeur>)vendeurs).Add(vendeur);
                 }
 
-                return clients;
+                return vendeurs;
             }
             catch (MonException e)
             {
@@ -200,20 +208,21 @@ namespace WebCommercial.Models.Metier
         }
 
         /// <summary>
-        /// mise à jour d'un client sur son ID
+        /// mise à jour d'un vendeur sur son ID
         /// </summary>
-        /// <param name="numCli">N° de l'utilisateur à lire</param>
-        public static void updateClient(Vendeur unCli)
+        /// <param name="unVend">Vendeur à mettre à jour</param>
+        public static void updateVendeur(Vendeur unVend)
         {
-            Serreurs er = new Serreurs("Erreur sur l'écriture d'un client.", "Client.update()");
+            Serreurs er = new Serreurs("Erreur sur l'écriture d'un vendeur.", "Vendeur.update()");
             String requete = "UPDATE Vendeur SET " +
-                                  "SOCIETE = '" + unCli.Societe + "'" +
-                                  ", NOM_CL = '" + unCli.NomCl + "'" +
-                                  ", PRENOM_CL = '" + unCli.PrenomCl + "'" +
-                                  ", ADRESSE_CL = '" + unCli.AdresseCl + "'" +
-                                   ", VILLE_CL = '" + unCli.VilleCl + "'" +
-                                   ", CODE_POST_CL = '" + unCli.CodePostCl + "'" +
-                                   " WHERE NO_CLIENT = " + unCli.NoClient;
+                                  "NO_VEND_CHEF_EQ = '" + unVend.NoChef + "'" +
+                                  ", NOM_VEND = '" + unVend.NomVendeur + "'" +
+                                  ", PRENOM_VEND = '" + unVend.PrenomVendeur + "'" +
+                                  ", DATE_EMBAU = '" + unVend.DateEmbauche.ToString("yyyy/MM/dd") + "'" +
+                                  ", VILLE_VEND = '" + unVend.VilleVendeur + "'" +
+                                  ", SALAIRE_VEND = '" + unVend.Salaire + "'" +
+                                  ", COMMISSION = '" + unVend.Commission + "'" +
+                                  " WHERE NO_VENDEUR = " + unVend.NoVendeur;
             try
             {
                 DBInterface.Insertion_Donnees(requete);
@@ -229,17 +238,17 @@ namespace WebCommercial.Models.Metier
 
         }
 
-        public static void insertClient(Vendeur unCli)
+        public static void insertVendeur(Vendeur unVend)
         {
-            Serreurs er = new Serreurs("Erreur sur la création d'un client.", "Client.insert()");
-            String requete = "INSERT INTO Vendeur (no_client, societe, nom_cl, prenom_cl, adresse_cl, ville_cl, code_post_cl) VALUES " +
-                                    "('" + unCli.NoClient + "'" +
-                                    ",'" + unCli.Societe + "'" +
-                                    ",'" + unCli.NomCl + "'" +
-                                    ",'" + unCli.PrenomCl + "'" +
-                                    ",'" + unCli.AdresseCl + "'" +
-                                    ",'" + unCli.VilleCl + "'" +
-                                    ",'" + unCli.CodePostCl + "')";
+            Serreurs er = new Serreurs("Erreur sur la création d'un vendeur.", "Vendeur.insert()");
+            String requete = "INSERT INTO Vendeur (NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND, DATE_EMBAU, VILLE_VEND, SALAIRE_VEND, COMMISSION) VALUES " +
+                                    "('" + unVend.NoChef + "'" +
+                                    ",'" + unVend.NomVendeur + "'" +
+                                    ",'" + unVend.PrenomVendeur + "'" +
+                                    ",'" + unVend.DateEmbauche.ToString("yyyy/MM/dd") + "'" +
+                                    ",'" + unVend.VilleVendeur + "'" +
+                                    ",'" + unVend.Salaire + "'" +
+                                    ",'" + unVend.Commission + "')";
             try
             {
                 DBInterface.Insertion_Donnees(requete);

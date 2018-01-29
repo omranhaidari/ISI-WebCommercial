@@ -148,6 +148,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CLientController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\VendeurController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -204,6 +205,10 @@
     <Content Include="Views\Client\TableRowClient.cshtml" />
     <Content Include="Views\Client\Ajouter.cshtml" />
     <Content Include="Views\Client\InformationsClient.cshtml" />
+    <Content Include="Views\Vendeur\Index.cshtml" />
+    <Content Include="Views\Vendeur\TableRowVendeur.cshtml" />
+    <Content Include="Views\Vendeur\FicheVendeur.cshtml" />
+    <Content Include="Views\Vendeur\Connexion.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

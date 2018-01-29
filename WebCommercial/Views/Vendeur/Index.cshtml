@@ -1,0 +1,44 @@
+﻿@model IEnumerable<WebCommercial.Models.Metier.Vendeur>
+
+@if (Model != null)
+{
+    <div class="container">
+        <div class="col-md-12 col-sm-12">
+            <div class="row blanc">
+                <h1>Liste des vendeurs </h1>
+            </div>
+
+            <hr />
+
+            <div class="row form-group">
+                <div class="col-md-4 col-sm-4">
+                    @Html.ActionLink("Ajouter des vendeurs", "Ajouter", "Vendeur", new { @class = "btn btn-default btn-success" })
+                </div>
+            </div>
+
+            <div class="row">
+                <table class="table table-bordered table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>N° Vendeur</th>
+                            <th>N° Chef d'équipe</th>
+                            <th>Nom</th>
+                            <th>Prénom</th>
+                            <th>Date d'embauche</th>
+                            <th>Ville</th>
+                            <th>Salaire</th>
+                            <th>Commission</th>
+                            <th style="width:80px">Modifier</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        @Html.Partial("TableRowVendeur", item)
+                    }
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+}

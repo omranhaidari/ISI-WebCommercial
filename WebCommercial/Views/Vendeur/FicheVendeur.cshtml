@@ -1,0 +1,86 @@
+﻿@model WebCommercial.Models.Metier.Vendeur
+
+<div>
+    <h1>Fiche Vendeur</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.NoVendeur)
+            @Html.DisplayFor(model => model.NoVendeur)
+        </div>
+        <div class="col-md-2">
+            @Html.DisplayNameFor(model => model.NoChef)
+            @Html.DisplayFor(model => model.NoChef)
+        </div>
+    </div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NoVendeur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoVendeur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NoChef)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NoChef)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NomVendeur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NomVendeur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrenomVendeur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrenomVendeur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateEmbauche)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateEmbauche)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VilleVendeur)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VilleVendeur)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salaire)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salaire)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Commission)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Commission)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Modifier mes informations", "Modifier", new { id = Model.NoVendeur }) |
+    @Html.ActionLink("Liste des vendeurs", "Index")
+</p>

@@ -14,12 +14,12 @@
             </div>
 
             <hr />
-
-            <div class="row form-group">
-                <div class="col-md-4 col-sm-4">
-                    @Html.ActionLink("Ajouter des clients", "Ajout", "Client", new { @class = "btn btn-default btn-success" })
-                </div>
-            </div>
+            <!--
+    <div class="row form-group">
+        <div class="col-md-4 col-sm-4">
+            @Html.ActionLink("Ajouter des clients", "Ajouter", "Client", new { @class = "btn btn-default btn-success" })
+        </div>
+    </div>-->
 
             <div class="row">
                 <table class="table table-bordered table-striped table-responsive">
@@ -37,9 +37,9 @@
                         </tr>
                     </thead>
                     @foreach (var item in Model)
-        {
-            @Html.Partial("TableRowClient", item)
-}
+            {
+                @Html.Partial("TableRowClient", item)
+    }
 
                 </table>
             </div>

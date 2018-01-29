@@ -1,0 +1,24 @@
+﻿@model WebCommercial.Models.Metier.Vendeur
+
+<tr>
+    <td>@Html.DisplayFor(modelItem => Model.NoVendeur)</td>
+    <td>@Html.DisplayFor(modelItem => Model.NoChef)</td>
+    <td> @Html.DisplayFor(modelItem => Model.NomVendeur) </td>
+
+    <td>@Html.DisplayFor(modelItem => Model.PrenomVendeur)</td>
+    <td> @Html.DisplayFor(modelItem => Model.DateEmbauche) </td>
+
+    <td>@Html.DisplayFor(modelItem => Model.VilleVendeur)</td>
+    <td>@Html.DisplayFor(modelItem => Model.Salaire) </td>
+    <td>@Html.DisplayFor(modelItem => Model.Commission) </td>
+    <td style="text-align:center;">
+        <span>
+            @Html.ActionLink("  ", "Modifier", "Vendeur", new { id = Model.NoVendeur }, new { @class = "btn btn-default btn-primary glyphicon glyphicon glyphicon-pencil" })
+        </span>
+    </td><!--
+    <td style="text-align:center;">
+        <span>
+            @Html.ActionLink("  ", "Supprimer", "Vendeur", new { id = Model.NoVendeur }, new { @class = "btn btn-default btn-danger glyphicon glyphicon glyphicon-remove" })
+        </span>
+    </td>-->
+</tr> 
