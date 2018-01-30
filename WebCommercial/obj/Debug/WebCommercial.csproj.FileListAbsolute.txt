@@ -99,3 +99,9 @@ D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\obj\Debug\We
 D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\obj\Debug\WebCommercial.csproj.CoreCompileInputs.cache
 D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\obj\Debug\WebCommercial.dll
 D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\obj\Debug\WebCommercial.pdb
+D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\bin\EntityFramework.dll
+D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\bin\EntityFramework.SqlServer.dll
+D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\bin\MySql.Data.Entity.EF6.dll
+D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\bin\EntityFramework.xml
+D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\bin\EntityFramework.SqlServer.xml
+D:\Pierre-Elliott\Documents\Projets\ISI-WebCommercial\WebCommercial\bin\MySql.Data.Entity.EF6.xml
