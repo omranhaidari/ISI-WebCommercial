@@ -19,6 +19,7 @@ namespace WebCommercial.Models.Metier
         private String villeArt;
         private float prix;
         private String interr;
+        private List<Article> articles;
 
 
         //Definition des properties
@@ -71,6 +72,14 @@ namespace WebCommercial.Models.Metier
             set { interr = value; }
         }
 
+        [Display(Name = "Composants")]
+        [Required(ErrorMessage = "Erreur de saisie")]
+        public List<Article> Composants
+        {
+            get { return articles; }
+            set { articles = value; }
+        }
+
         /// <summary>
         /// Initialisation
         /// </summary>
@@ -82,11 +91,12 @@ namespace WebCommercial.Models.Metier
             villeArt = "";
             prix = 0;
             interr = "";
+            articles = new List<Article>();
         }
         /// <summary>
         /// Initialisation avec les paramètres
         /// </summary>
-        public Article(int no, string lib, int qute, string ville, float price, string inte)
+        public Article(int no, string lib, int qute, string ville, float price, string inte, List<Article> arts)
         {
             noArticle = no;
             libelle = lib;
@@ -100,6 +110,7 @@ namespace WebCommercial.Models.Metier
             {
                 interr = inte;
             }
+            articles = arts;
         }
 
         /// <summary>
@@ -117,7 +128,7 @@ namespace WebCommercial.Models.Metier
 
                 mysql = "SELECT LIB_ARTICLE, QTE_DISPO,";
                 mysql += "VILLE_ART, PRIX_ART, INTERROMPU ";
-                mysql += "FROM Article WHERE NO_ARTICLE = " + noArt;
+                mysql += "FROM Articles WHERE NO_ARTICLE = " + noArt;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
@@ -143,6 +154,37 @@ namespace WebCommercial.Models.Metier
 
         }
 
+        public static List<Article> getComposantsArticle(int noArt)
+        {
+
+            String mysql;
+            DataTable dt;
+            Article article;
+            List<Article> articles = new List<Article>();
+            Serreurs er = new Serreurs("Erreur sur recherche des composants d'un article.", "Article.RechercheUnArticle()");
+            try
+            {
+
+                mysql = "SELECT NO_COMPOSANT, QTE_COMPOSANT ";
+                mysql += "FROM Compose WHERE NO_COMPOSE = " + noArt;
+                dt = DBInterface.Lecture(mysql, er);
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    article = getArticle(int.Parse(dataRow[0].ToString()));
+
+                    ((List<Article>)articles).Add(article);
+                }
+
+                return articles;
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+
+        }
+
         public static IEnumerable<Article> getArticles()
         {
             IEnumerable<Article> articles = new List<Article>();
@@ -152,7 +194,7 @@ namespace WebCommercial.Models.Metier
             try
             {
                 String mysql = "SELECT NO_ARTICLE, LIB_ARTICLE, QTE_DISPO," +
-                               "VILLE_ART, PRIX_ART, INTERROMPU FROM Article ORDER BY NO_ARTICLE";
+                               "VILLE_ART, PRIX_ART, INTERROMPU FROM Articles ORDER BY NO_ARTICLE";
 
                 dt = DBInterface.Lecture(mysql, er);
 
@@ -188,7 +230,7 @@ namespace WebCommercial.Models.Metier
         public static void updateArticle(Article unArt)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un article.", "Article.update()");
-            String requete = "UPDATE Article SET " +
+            String requete = "UPDATE Articles SET " +
                                   "LIB_ARTICLE = '" + unArt.libelle + "'" +
                                   ", QTE_DISPO = '" + unArt.qte + "'" +
                                   ", VILLE_ART = '" + unArt.villeArt + "'" + "'" +
@@ -213,7 +255,7 @@ namespace WebCommercial.Models.Metier
         public static void insertArticle(Article unArt)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un article.", "Article.insert()");
-            String requete = "INSERT INTO Article (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
+            String requete = "INSERT INTO Articles (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
                                     "('" + unArt.libelle + "'" +
                                     ",'" + unArt.qte + "'" +
                                     ",'" + unArt.villeArt + "'" +

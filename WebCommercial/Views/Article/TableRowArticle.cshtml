@@ -1,0 +1,23 @@
+﻿
+@model WebCommercial.Models.Metier.Article
+
+<tr>
+    <td>@Html.DisplayFor(modelItem => Model.NoArticle)</td>
+    <td>@Html.DisplayFor(modelItem => Model.Libelle)</td>
+    <td> @Html.DisplayFor(modelItem => Model.Quantite) </td>
+
+    <td>@Html.DisplayFor(modelItem => Model.VilleArticle)</td>
+    <td> @Html.DisplayFor(modelItem => Model.Prix) </td>
+
+    <td>@Html.DisplayFor(modelItem => Model.Interrompu)</td>
+    <td style="text-align:center;">
+        <span>
+            @Html.ActionLink("  ", "Modifier", "Article", new { id = Model.NoArticle }, new { @class = "btn btn-default btn-primary glyphicon glyphicon glyphicon-pencil" })
+        </span>
+    </td>
+    <td style="text-align:center;">
+        <span>
+            @Html.ActionLink("  ", "Supprimer", "Article", new { id = Model.NoArticle }, new { @class = "btn btn-default btn-danger glyphicon glyphicon glyphicon-remove" })
+        </span>
+    </td>
+</tr> 

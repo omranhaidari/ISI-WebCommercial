@@ -18,7 +18,7 @@ namespace WebCommercial.Models.Metier
         private int noClient;
         private DateTime dateCde;
         private String facture;
-        private List<Article> articles;
+        private List<ArticleCommande> articles;
 
 
         //Definition des properties
@@ -65,7 +65,7 @@ namespace WebCommercial.Models.Metier
 
         [Display(Name = "Articles")]
         [Required(ErrorMessage = "Erreur de saisie")]
-        public List<Article> Articles
+        public List<ArticleCommande> Articles
         {
             get { return articles; }
             set { articles = value; }
@@ -81,12 +81,12 @@ namespace WebCommercial.Models.Metier
             noClient = 0;
             dateCde = new DateTime();;
             facture = "";
-            articles = new List<Article>();
+            articles = new List<ArticleCommande>();
         }
         /// <summary>
         /// Initialisation avec les paramètres
         /// </summary>
-        public Commande(int no, int vend, int cli, DateTime date, String fact, List<Article> arts)
+        public Commande(int no, int vend, int cli, DateTime date, String fact, List<ArticleCommande> arts)
         {
             noCommande = no;
             noVendeur = vend;
@@ -97,7 +97,7 @@ namespace WebCommercial.Models.Metier
         }
 
         public Commande(int no, int vend, int cli, DateTime date, String fact)
-            : this(no, vend, cli, date, fact, new List<Article>())
+            : this(no, vend, cli, date, fact, new List<ArticleCommande>())
         {
             
         }
@@ -105,8 +105,8 @@ namespace WebCommercial.Models.Metier
         /// <summary>
         /// Lire un utilisateur sur son ID
         /// </summary>
-        /// <param name="noArt">N° de l'utilisateur à lire</param>
-        public static Article getArticle(int noArt)
+        /// <param name="noCom">N° de l'utilisateur à lire</param>
+        public static Commande getCommande(int noCom)
         {
 
             String mysql;
@@ -115,23 +115,23 @@ namespace WebCommercial.Models.Metier
             try
             {
 
-                mysql = "SELECT LIB_ARTICLE, QTE_DISPO,";
-                mysql += "VILLE_ART, PRIX_ART, INTERROMPU ";
-                mysql += "FROM Article WHERE NO_ARTICLE = " + noArt;
+                mysql = "SELECT NO_VENDEUR,";
+                mysql += "NO_CLIENT, DATE_CDE, FACTURE ";
+                mysql += "FROM Commandes WHERE NO_COMMAND = " + noCom;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
                 {
-                    Article article = new Article();
+                    Commande commande = new Commande();
                     DataRow dataRow = dt.Rows[0];
-                    article.noArticle = noArt;
-                    article.libelle = dataRow[0].ToString();
-                    article.qte = int.Parse(dataRow[1].ToString());
-                    article.villeArt = dataRow[2].ToString();
-                    article.prix = float.Parse(dataRow[3].ToString());
-                    article.interr = dataRow[4].ToString();
+                    commande.noCommande = noCom;
+                    commande.noVendeur = int.Parse(dataRow[0].ToString());
+                    commande.noClient = int.Parse(dataRow[1].ToString());
+                    commande.dateCde = DateTime.Parse(dataRow[2].ToString());
+                    commande.facture = dataRow[3].ToString();
+                    commande.articles = getArticlesFromCommande(noCom);
 
-                    return article;
+                    return commande;
                 }
                 else
                     return null;
@@ -143,30 +143,27 @@ namespace WebCommercial.Models.Metier
 
         }
 
-        public static IEnumerable<Article> getArticles()
+        public static List<ArticleCommande> getArticlesFromCommande(int noCom)
         {
-            IEnumerable<Article> articles = new List<Article>();
+            List<ArticleCommande> articles = new List<ArticleCommande>();
             DataTable dt;
-            Article article;
-            Serreurs er = new Serreurs("Erreur sur lecture des articles.", "ArticlesList.getArticles()");
+            ArticleCommande article;
+            Serreurs er = new Serreurs("Erreur sur lecture des articles de la commande.", "ArticlesList.getArticles()");
             try
             {
-                String mysql = "SELECT NO_ARTICLE, LIB_ARTICLE, QTE_DISPO," +
-                               "VILLE_ART, PRIX_ART, INTERROMPU FROM Article ORDER BY NO_ARTICLE";
+                String mysql = "SELECT NO_ARTICLE, QTE_CDEE, LIVREE FROM Detail_cde " +
+                               "WHERE NO_COMMAND = " + noCom + " ORDER BY NO_ARTICLE";
 
                 dt = DBInterface.Lecture(mysql, er);
 
                 foreach (DataRow dataRow in dt.Rows)
                 {
-                    article = new Article();
-                    article.noArticle = int.Parse(dataRow[0].ToString());
-                    article.libelle = dataRow[1].ToString();
-                    article.qte = int.Parse(dataRow[2].ToString());
-                    article.villeArt = dataRow[3].ToString();
-                    article.prix = float.Parse(dataRow[4].ToString());
-                    article.interr = dataRow[5].ToString();
+                    article = new ArticleCommande();
+                    article.QuantiteCommandee = int.Parse(dataRow[1].ToString());
+                    article.Livree = dataRow[2].ToString();
+                    article.Article = Article.getArticle(int.Parse(dataRow[0].ToString()));
 
-                    ((List<Article>)articles).Add(article);
+                    ((List<ArticleCommande>)articles).Add(article);
                 }
 
                 return articles;
@@ -181,20 +178,119 @@ namespace WebCommercial.Models.Metier
             }
         }
 
+        public static void addArticleInCommande(int id, ArticleCommande art)
+        {
+            Serreurs er = new Serreurs("Erreur sur l'insertion d'un article dans une commande.", "Commande.insertArticle()");
+            String requete = "INSERT INTO Detail_cde (NO_COMMAND, NO_ARTICLE, QTE_CDEE, LIVREE) VALUES " +
+                                    "('" + id + "'" +
+                                    ",'" + art.Article.NoArticle + "'" +
+                                    ",'" + art.QuantiteCommandee + "'" +
+                                    ",'" + art.Livree + "')";
+            try
+            {
+                DBInterface.Insertion_Donnees(requete);
+            }
+            catch (MonException erreur)
+            {
+                throw erreur;
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+        }
+
+        public static void deleteArticleInCommande(int id, int noArt)
+        {
+            Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
+            String requete = "DELETE FROM Details_cde WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + noArt;
+            try
+            {
+                DBInterface.Insertion_Donnees(requete);
+            }
+            catch (MonException erreur)
+            {
+                throw erreur;
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+        }
+
+        public static void updateArticleInCommande(int id, ArticleCommande art)
+        {
+            Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
+            String requete = "UPDATE Details_cde SET " +
+                                  ", NO_ARTICLE = '" + art.Article.NoArticle + "'" +
+                                  ", QTE_CDEE = '" + art.QuantiteCommandee + "'" + "'" +
+                                  ", LIVREE = '" + art.Livree + "'" +
+                                  " WHERE NO_COMMAND = " + id;
+            try
+            {
+                DBInterface.Insertion_Donnees(requete);
+            }
+            catch (MonException erreur)
+            {
+                throw erreur;
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+        }
+
+        public static IEnumerable<Commande> getCommandes()
+        {
+            IEnumerable<Commande> commandes = new List<Commande>();
+            DataTable dt;
+            Commande commande;
+            Serreurs er = new Serreurs("Erreur sur lecture des articles.", "ArticlesList.getArticles()");
+            try
+            {
+                String mysql = "SELECT NO_COMMAND, NO_VENDEUR, NO_CLIENT," +
+                               "DATE_CDE, FACTURE FROM Commandes ORDER BY NO_COMMAND";
+
+                dt = DBInterface.Lecture(mysql, er);
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    commande = new Commande();
+                    commande.noCommande = int.Parse(dataRow[0].ToString());
+                    commande.noVendeur = int.Parse(dataRow[1].ToString());
+                    commande.noClient = int.Parse(dataRow[2].ToString());
+                    commande.dateCde = DateTime.Parse(dataRow[3].ToString());
+                    commande.facture = dataRow[4].ToString();
+                    commande.articles = getArticlesFromCommande(commande.noCommande);
+
+                    ((List<Commande>)commandes).Add(commande);
+                }
+
+                return commandes;
+            }
+            catch (MonException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+        }
+        
         /// <summary>
         /// mise à jour d'un vendeur sur son ID
         /// </summary>
-        /// <param name="unArt">Vendeur à mettre à jour</param>
-        public static void updateArticle(Article unArt)
+        /// <param name="uneCom">Vendeur à mettre à jour</param>
+        public static void updateCommande(Commande uneCom)
         {
-            Serreurs er = new Serreurs("Erreur sur l'écriture d'un article.", "Article.update()");
-            String requete = "UPDATE Article SET " +
-                                  "LIB_ARTICLE = '" + unArt.libelle + "'" +
-                                  ", QTE_DISPO = '" + unArt.qte + "'" +
-                                  ", VILLE_ART = '" + unArt.villeArt + "'" + "'" +
-                                  ", PRIX_ART = '" + unArt.prix + "'" +
-                                  ", INTERROMPU = '" + unArt.interr + "'" +
-                                  " WHERE NO_ARTICLE = " + unArt.noArticle;
+            Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
+            String requete = "UPDATE Commandes SET " +
+                                  ", NO_VENDEUR = '" + uneCom.noVendeur + "'" +
+                                  ", NO_CLIENT = '" + uneCom.noClient + "'" + "'" +
+                                  ", DATE_CDE = '" + uneCom.dateCde + "'" +
+                                  ", FACTURE = '" + uneCom.facture + "'" +
+                                  " WHERE NO_COMMAND = " + uneCom.noCommande;
             try
             {
                 DBInterface.Insertion_Donnees(requete);
@@ -208,17 +304,18 @@ namespace WebCommercial.Models.Metier
                 throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
             }
 
+            // TODO Ajouter la modification/insertion/suppression éventuelle des articles qu'elle contient
+
         }
 
-        public static void insertArticle(Article unArt)
+        public static void insertCommande(Commande uneCom)
         {
-            Serreurs er = new Serreurs("Erreur sur la création d'un article.", "Article.insert()");
-            String requete = "INSERT INTO Article (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
-                                    "('" + unArt.libelle + "'" +
-                                    ",'" + unArt.qte + "'" +
-                                    ",'" + unArt.villeArt + "'" +
-                                    ",'" + unArt.prix + "'" +
-                                    ",'" + unArt.interr + "')";
+            Serreurs er = new Serreurs("Erreur sur la création d'une commande.", "Commande.insert()");
+            String requete = "INSERT INTO Article (NO_VENDEUR, NO_CLIENT, DATE_CDE, FACTURE) VALUES " +
+                                    "('" + uneCom.noVendeur + "'" +
+                                    ",'" + uneCom.noClient + "'" +
+                                    ",'" + uneCom.dateCde + "'" +
+                                    ",'" + uneCom.facture + "')";
             try
             {
                 DBInterface.Insertion_Donnees(requete);

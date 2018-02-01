@@ -1,0 +1,24 @@
+﻿
+@model WebCommercial.Models.Metier.Commande
+
+<div class="container">
+    <div class="col-md-10 col-sm-10">
+        <div class="blanc">
+            <h1>Modifier une commande</h1>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 col-md-offset-6 col-sm-6 col-sm-offset-6">
+                @Html.ActionLink("Retourner à la liste des commandes", "Index", "Commande", null, new { @class = "btn btn-default btn-primary" })
+            </div>
+        </div>
+
+        @if (Model != null)
+        {
+
+            @Html.Partial("InformationsCommande", Model)
+
+        }
+
+    </div>
+</div>

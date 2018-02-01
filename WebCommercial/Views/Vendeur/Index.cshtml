@@ -1,7 +1,6 @@
 ﻿@model IEnumerable<WebCommercial.Models.Metier.Vendeur>
 
-@if (Model != null)
-{
+
     <div class="container">
         <div class="col-md-12 col-sm-12">
             <div class="row blanc">
@@ -12,7 +11,7 @@
 
             <div class="row form-group">
                 <div class="col-md-4 col-sm-4">
-                    @Html.ActionLink("Ajouter des vendeurs", "Ajouter", "Vendeur", new { @class = "btn btn-default btn-success" })
+                    @Html.ActionLink("Ajouter des vendeurs", "Ajouter", "Vendeur", null, new { @class = "btn btn-default btn-success" })
                 </div>
             </div>
 
@@ -31,9 +30,12 @@
                             <th style="width:80px">Modifier</th>
                         </tr>
                     </thead>
-                    @foreach (var item in Model)
+                    @if (Model != null)
                     {
-                        @Html.Partial("TableRowVendeur", item)
+                        foreach (var item in Model)
+                        {
+                            @Html.Partial("TableRowVendeur", item)
+                        }
                     }
 
                 </table>
@@ -41,4 +43,4 @@
 
         </div>
     </div>
-}
+

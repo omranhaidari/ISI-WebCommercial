@@ -1,0 +1,51 @@
+﻿@model IEnumerable<WebCommercial.Models.Metier.Commande>
+
+
+<div class="container">
+    <div class="col-md-12 col-sm-12">
+        <div class="row blanc">
+            <h1>Liste des commandes </h1>
+        </div>
+
+        <hr />
+
+        <div class="row form-group">
+            <div class="col-md-4 col-sm-4">
+                @Html.ActionLink("Ajouter une commande", "Ajouter", "Commande", null, new { @class = "btn btn-default btn-success" })
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table table-bordered table-hover table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>N° commande</th>
+                        <th>N° vendeur</th>
+                        <th>N° client</th>
+                        <th>Date commande</th>
+                        <th>Nombre d'articles</th>
+                        <th>Facture</th>
+                        <th>Détails</th>
+                        <th style="width:80px">Modifier</th>
+                        <th style="width:80px">Supprimer</th>
+                    </tr>
+                </thead>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        @Html.Partial("TableRowCommande", item)
+                    }
+                }
+                else
+                {
+                    <tr>Hello world!</tr>
+                }
+
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@Html.Partial("DetailsCommande")

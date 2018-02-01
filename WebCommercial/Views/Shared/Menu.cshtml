@@ -10,18 +10,18 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <!--
+                
     <li class="dropdown">
-        <a href="" class="dropdown-toggle" data-toggle="dropdown">Fichier<b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Fichier<b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li class="dropdown-header">Application</li>
             <li class="dropdown-header">----------</li>
             <li role="separator" class="divider"></li>
             <li>@Html.ActionLink("Se déconnecter", "Deconnexion", "Vendeur")</li>
         </ul>
-    </li>-->
+    </li>
                 <li class="dropdown">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Interroger<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Interroger<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Fiches</li>
                         <li role="separator" class="divider"></li>
@@ -31,11 +31,11 @@
                         <li role="separator" class="divider"></li>
                         <li class="dropdown-header">Commandes</li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="#">Liste des commandes</a></li>
+                        <li>@Html.ActionLink("Liste des Commandes", "Index", "Commande")</li>
                     </ul>
                 </li>
                 <li class="dropdown">
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown">Gérer<b class="caret"></b></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">Gérer<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li class="dropdown-header">Gestion</li>
                         <li role="separator" class="divider"></li>
@@ -51,14 +51,14 @@
                 <li>@Html.ActionLink("À propos de", "About", "Home")</li>
                 <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 @if (Context.User.Identity.IsAuthenticated)
-    {
-            <li>@Html.ActionLink("Ma Fiche", "FicheVendeur", "Vendeur")</li>
-            <li>@Html.ActionLink("Se Déconnecter", "Deconnexion", "Vendeur")</li>
-}
-else
-{
-            <li>@Html.ActionLink("Se Connecter", "Connexion", "Vendeur")</li>
-}
+                {
+                    <li>@Html.ActionLink("Ma Fiche", "FicheVendeur", "Vendeur", new { id = Context.User.Identity.Name }, null)</li>
+                    <li>@Html.ActionLink("Se Déconnecter", "Deconnexion", "Vendeur")</li>
+                }
+                else
+                {
+                    <li>@Html.ActionLink("Se Connecter", "Connexion", "Vendeur")</li>
+                }
             </ul>
         </div>
     </div>

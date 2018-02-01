@@ -1,0 +1,48 @@
+﻿@model IEnumerable<WebCommercial.Models.Metier.Article>
+
+
+<div class="container">
+    <div class="col-md-12 col-sm-12">
+        <div class="row blanc">
+            <h1>Liste des commandes </h1>
+        </div>
+
+        <hr />
+
+        <div class="row form-group">
+            <div class="col-md-4 col-sm-4">
+                @Html.ActionLink("Ajouter un article", "Ajouter", "Article", null, new { @class = "btn btn-default btn-success" })
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table table-bordered table-striped table-responsive">
+                <thead>
+                    <tr>
+                        <th>N° article</th>
+                        <th>Libelle</th>
+                        <th>Quantité</th>
+                        <th>Ville</th>
+                        <th>Prix</th>
+                        <th>En stock</th>
+                        <th style="width:80px">Modifier</th>
+                        <th style="width:80px">Supprimer</th>
+                    </tr>
+                </thead>
+                @if (Model != null)
+                {
+                    foreach (var item in Model)
+                    {
+                        @Html.Partial("TableRowArticle", item)
+                    }
+                }
+                else
+                {
+                    <tr>Hello world!</tr>
+                }
+
+            </table>
+        </div>
+
+    </div>
+</div>
