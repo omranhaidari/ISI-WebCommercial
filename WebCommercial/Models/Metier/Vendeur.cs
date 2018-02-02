@@ -161,6 +161,30 @@ namespace WebCommercial.Models.Metier
 
         }
 
+        public static List<String> LectureNoVendeurs()
+        {
+            List<String> mesNumeros = new List<String>();
+            DataTable dt;
+            Serreurs er = new Serreurs("Erreur sur lecture du vendeur.", "Vendeur.LectureNoVendeur()");
+            try
+            {
+
+                String mysql = "SELECT DISTINCT NO_VENDEUR FROM Vendeur ORDER BY NO_VENDEUR";
+                dt = DBInterface.Lecture(mysql, er);
+
+                foreach (DataRow dataRow in dt.Rows)
+                {
+                    mesNumeros.Add((dataRow[0]).ToString());
+                }
+
+                return mesNumeros;
+            }
+            catch (MySqlException e)
+            {
+                throw new MonException(er.MessageUtilisateur(), er.MessageApplication(), e.Message);
+            }
+        }
+
         public static Vendeur authentifier(String login, String pwd)
         {
             // Pour simplifier le débug, on authentifie un vendeur avec son simple ID (sans mot de passe)

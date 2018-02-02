@@ -30,6 +30,7 @@ namespace WebApplication1.Controllers
             return View(clients);
         }
 
+        [Authorize]
         // GET: Commande/Edit/5
         public ActionResult Modifier(int id)
         {
@@ -45,6 +46,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Modifier(Clientel unC)
         {
@@ -70,6 +72,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize]
         public ActionResult Ajouter()
         {
             try
@@ -83,6 +86,7 @@ namespace WebApplication1.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public ActionResult Ajouter(Clientel unC)
         {

@@ -16,7 +16,7 @@ namespace WebCommercial.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Title = "About";
+            ViewBag.Title = "À propos";
             ViewBag.Message = "Page en construction";
 
             return View();

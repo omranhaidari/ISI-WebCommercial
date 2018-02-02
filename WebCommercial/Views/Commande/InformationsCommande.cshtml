@@ -21,7 +21,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NoVendeur, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NoVendeur, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("NoVendeur", ViewBag.NoVendeurs as IEnumerable<SelectListItem>, htmlAttributes : new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.NoVendeur, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +29,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NoClient, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.NoClient, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownList("NoClient", ViewBag.NoClients as IEnumerable<SelectListItem>, htmlAttributes : new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.NoClient, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,28 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Facture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Facture, new { htmlAttributes = new { @class = "form-control" } })
+                @if (Model.Facture == "T")
+                {
+                    <div class="form-check radio-inline">
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T" checked>
+                        <label class="form-check-label" for="Facture1">Oui</label>
+                    </div>
+                    <div class="form-check radio-inline">
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F">
+                        <label class="form-check-label" for="Facture2">Non</label>
+                    </div>
+                }
+                else
+                {
+                    <div class="form-check radio-inline">
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T">
+                        <label class="form-check-label" for="Facture1">Oui</label>
+                    </div>
+                    <div class="form-check radio-inline">
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F" checked>
+                        <label class="form-check-label" for="Facture2">Non</label>
+                    </div>
+                }
                 @Html.ValidationMessageFor(model => model.Facture, "", new { @class = "text-danger" })
             </div>
         </div>

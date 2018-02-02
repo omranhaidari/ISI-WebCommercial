@@ -112,7 +112,7 @@ namespace WebCommercial.Models.Metier
         /// Lister les clients de la base
         /// </summary>
         /// <returns>Liste de numéros de clients</returns>
-        public static List<String> LectureNoClient()
+        public static List<String> LectureNoClients()
         {
             List<String> mesNumeros = new List<String>();
             DataTable dt;

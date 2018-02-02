@@ -32,6 +32,7 @@ namespace WebCommercial.Controllers
         }
 
         // GET: Vendeur/Details/5
+        [Authorize]
         public ActionResult FicheVendeur(int id)
         {
             try
@@ -85,6 +86,7 @@ namespace WebCommercial.Controllers
         }
 
         // GET: Vendeur/Create
+        [Authorize]
         public ActionResult Ajouter()
         {
             try
@@ -99,6 +101,7 @@ namespace WebCommercial.Controllers
         }
 
         // POST: Vendeur/Create
+        [Authorize]
         [HttpPost]
         public ActionResult Ajouter(Vendeur unVend)
         {
@@ -116,6 +119,7 @@ namespace WebCommercial.Controllers
         }
 
         // GET: Vendeur/Edit/5
+        [Authorize]
         public ActionResult Modifier(int id)
         {
             try
@@ -131,6 +135,7 @@ namespace WebCommercial.Controllers
         }
 
         // POST: Vendeur/Edit/5
+        [Authorize]
         [HttpPost]
         public ActionResult Modifier(Vendeur unVend)
         {
