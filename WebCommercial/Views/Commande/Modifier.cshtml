@@ -14,11 +14,68 @@
         </div>
 
         @if (Model != null)
-        {
+    {
 
-            @Html.Partial("InformationsCommande", Model)
+        @Html.Partial("InformationsCommande", Model)
 
-        }
+}
+
+        <hr />
+
+        <div class="row">
+            <div class="col-md-3">
+                <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#commandeArticleModal"
+                        data-noArt="" data-titre="Ajouter">
+                    Ajouter article
+                </button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
+                <table class="table table-bordered table-hover table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>N° article</th>
+                            <th>Libelle</th>
+                            <th>Prix unitaire (€)</th>
+                            <th>Quantité commandée</th>
+                            <th>Montant total (€)</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Articles)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Article.NoArticle)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Article.Libelle)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Article.Prix)</td>
+
+                            <td>@Html.DisplayFor(modelItem => item.QuantiteCommandee)</td>
+                            <td>@((item.QuantiteCommandee) * (item.Article.Prix))</td>
+
+                            <td>
+                                <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#commandeArticleModal"
+                                        data-noCom="@Model.NoCommande" data-noArt="@item.Article.NoArticle" data-quantite="@item.QuantiteCommandee" data-titre="Modifier">
+                                    Modifier
+                                </button>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#commandeArticleModalSuppression"
+                                        data-noArt="@item.Article.NoArticle" data-titre="Supprimer">
+                                    Supprimer
+                                </button>
+                            </td>
+                        </tr>
+                }
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
     </div>
 </div>
+
+@Html.Partial("ArticleCommandeModal")

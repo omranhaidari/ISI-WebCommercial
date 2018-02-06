@@ -113,6 +113,24 @@ namespace WebCommercial.Models.Metier
             articles = arts;
         }
 
+        public Article(int no, string lib, int qute, string ville, float price, string inte)
+        {
+            noArticle = no;
+            libelle = lib;
+            qte = qute;
+            villeArt = ville;
+            prix = price;
+            if (inte.Length != 1)
+            { // Si le nom n'est pas valide, il est remplacé par "F"
+                interr = "F";
+            }
+            else
+            {
+                interr = inte;
+            }
+            articles = new List<Article>();
+        }
+
         /// <summary>
         /// Lire un utilisateur sur son ID
         /// </summary>

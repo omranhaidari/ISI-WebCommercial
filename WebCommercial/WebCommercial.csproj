@@ -285,6 +285,7 @@
     <Content Include="Views\Commande\DetailsCommande.cshtml" />
     <Content Include="Views\Commande\Modifier.cshtml" />
     <Content Include="Views\Commande\InformationsCommande.cshtml" />
+    <Content Include="Views\Commande\ArticleCommandeModal.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

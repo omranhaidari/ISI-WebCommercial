@@ -286,9 +286,9 @@ namespace WebCommercial.Models.Metier
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
             String requete = "UPDATE Commandes SET " +
-                                  ", NO_VENDEUR = '" + uneCom.noVendeur + "'" +
-                                  ", NO_CLIENT = '" + uneCom.noClient + "'" + "'" +
-                                  ", DATE_CDE = '" + uneCom.dateCde + "'" +
+                                  "NO_VENDEUR = " + uneCom.noVendeur +
+                                  ", NO_CLIENT = " + uneCom.noClient +
+                                  //", DATE_CDE = '" + uneCom.dateCde + "'" +
                                   ", FACTURE = '" + uneCom.facture + "'" +
                                   " WHERE NO_COMMAND = " + uneCom.noCommande;
             try

@@ -65,11 +65,36 @@ namespace WebCommercial.Controllers
                 }
                 ViewBag.NoClients = items;
 
+                items = new List<SelectListItem>();
+                foreach (Article art in Article.getArticles())
+                {
+                    items.Add(new SelectListItem { Text = art.NoArticle + "/;/" + art.Libelle + "/;/" + art.Prix, Value = art.NoArticle.ToString() });
+                }
+                ViewBag.Articles = items;
+
                 return View(uneCom);
             }
             catch (MonException e)
             {
                 return HttpNotFound();
+            }
+        }
+
+        [Route("[controller]/[action]")]
+        [HttpPost]
+        public ActionResult AjoutArticle(int id, int noart, int quantite, string livree)  
+        {
+            try
+            {
+                Article art = new Article();
+                art.NoArticle = noart;
+                Commande.addArticleInCommande(id, new ArticleCommande(art, quantite, livree));
+
+                return Json("{true}");
+            }
+            catch (MonException e)
+            {
+                return null;
             }
         }
 
@@ -85,33 +110,9 @@ namespace WebCommercial.Controllers
 
             try
             {
-                // utilisation possible de Request
-                //  String s= Request["Societe"];
-
                 Commande.updateCommande(uneCom);
 
-                return RedirectToAction("Index");
-            }
-            catch (MonException e)
-            {
-                return HttpNotFound();
-            }
-        }
-
-        [Authorize]
-        [HttpPost]
-        public ActionResult Modifier(int NoCommande, int NoVendeur, int NoClient, DateTime DateCommande, String Facture)
-        {
-            Commande uneCom = new Commande(NoCommande, NoVendeur, NoClient, DateCommande, Facture);
-
-            try
-            {
-                // utilisation possible de Request
-                //  String s= Request["Societe"];
-
-                Commande.updateCommande(uneCom);
-
-                return RedirectToAction("Index");
+                return RedirectToAction("Modifier", uneCom.NoCommande);
             }
             catch (MonException e)
             {

@@ -19,6 +19,9 @@ namespace WebCommercial.Controllers
             try
             {
                 vendeurs = Vendeur.getVendeurs();
+
+                ViewBag.Title = "Liste des vendeurs";
+                return View(vendeurs);
             }
             catch (MonException e)
             {
@@ -26,9 +29,6 @@ namespace WebCommercial.Controllers
                 ViewBag.Message = "Liste des vendeurs";
                 return View("Error");
             }
-
-            ViewBag.Title = "Liste des vendeurs";
-            return View(vendeurs);
         }
 
         // GET: Vendeur/Details/5
