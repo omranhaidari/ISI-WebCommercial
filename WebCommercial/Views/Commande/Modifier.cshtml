@@ -25,7 +25,7 @@
         <div class="row">
             <div class="col-md-3">
                 <button type="button" class="btn btn-block btn-success" data-toggle="modal" data-target="#commandeArticleModal"
-                        data-noArt="" data-titre="Ajouter">
+                        data-action="A" data-noCom="@Model.NoCommande" data-noArt="" data-titre="Ajouter">
                     Ajouter article
                 </button>
             </div>
@@ -58,13 +58,13 @@
 
                             <td>
                                 <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#commandeArticleModal"
-                                        data-noCom="@Model.NoCommande" data-noArt="@item.Article.NoArticle" data-quantite="@item.QuantiteCommandee" data-titre="Modifier">
+                                        data-action="M" data-noCom="@Model.NoCommande" data-noArt="@item.Article.NoArticle" data-quantite="@item.QuantiteCommandee" data-titre="Modifier">
                                     Modifier
                                 </button>
                             </td>
                             <td>
                                 <button type="button" class="btn btn-block btn-danger" data-toggle="modal" data-target="#commandeArticleModalSuppression"
-                                        data-noArt="@item.Article.NoArticle" data-titre="Supprimer">
+                                        data-action="S" data-noCom="@Model.NoCommande" data-noArt="@item.Article.NoArticle" data-titre="Supprimer">
                                     Supprimer
                                 </button>
                             </td>

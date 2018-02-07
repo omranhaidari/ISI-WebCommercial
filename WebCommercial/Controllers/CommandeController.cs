@@ -80,12 +80,16 @@ namespace WebCommercial.Controllers
             }
         }
 
-        [Route("[controller]/[action]")]
+        [Route("Commande/AjoutArticle")]
         [HttpPost]
-        public ActionResult AjoutArticle(int id, int noart, int quantite, string livree)  
+        public ActionResult AjoutArticle()  
         {
             try
             {
+                int id = int.Parse(Request["id"]);
+                int noart = int.Parse(Request["noart"]);
+                int quantite = int.Parse(Request["quantite"]);
+                string livree = Request["livree"];
                 Article art = new Article();
                 art.NoArticle = noart;
                 Commande.addArticleInCommande(id, new ArticleCommande(art, quantite, livree));

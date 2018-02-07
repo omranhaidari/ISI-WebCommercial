@@ -40,6 +40,7 @@ $('#commandeDetailsModal').on('show.bs.modal', function (event) {
 $('#commandeArticleModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget); // Button that triggered the modal
     var noCom = button.data('nocom');
+    var typeAction = button.data('action');
     var noArt = button.data('noart');
     var quantite = button.data('quantite');
     var libelle, prix;
@@ -107,13 +108,31 @@ $('#commandeArticleModal').on('show.bs.modal', function (event) {
         }
     }
 
-    function showErreur() {
-        modal.find('.modal-body #erreurField').text("Erreur");
+    function showErreur(msg) {
+        modal.find('.modal-body #erreurField').text(msg);
     }
     
 
     document.getElementById('articleCommandeModalValidation').addEventListener("click", function (evt) {
-        SendAjaxPOST("Commande/AjoutArticle", "id=" + noCom + "&noart=" + noArt + "&quantite=" + quantite + "&livree=F", updateForm, showErreur);
+        var url = "", content = "";
+        switch (typeAction) {
+            case "A":
+                url = "/Commande/AjoutArticle";
+                content = "id=" + noCom + "&noart=" + noArt + "&quantite=" + quantite + "&livree=F";
+                break;
+            case "M":
+                url = "/Commande/ModifierArticle";
+                content = "id=" + noCom + "&noart=" + noArt + "&quantite=" + quantite + "&livree=F";
+                break;
+            case "S":
+                url = "/Commande/SupprimerArticle";
+                content = "id=" + noCom + "&noart=" + noArt;
+                break;
+        }
+        console.log(content);
+        SendAjaxPOST(url, content, updateForm, function () {
+            showErreur("Erreur lors de l'appel à  : '" + url + "'");
+        });
     });
 })
 
@@ -134,18 +153,23 @@ function SendAjaxPOST(url, content, callback, error) {
     if (xhr != null) {
         xhr.onreadystatechange = function () {
             console.log(xhr);
+            console.log(content);
             if (xhr.readyState == 4 && xhr.status == 200) {
+                console.log("Calling callback");
                 callback(JSON.parse(xhr.responseText));
             } else {
+                console.log("Calling error");
                 error();
             }
         }
 
+        console.log(url);
+
         //Pass the value to a web page on server as query string using XMLHttpObject.    
         xhr.open("POST", url, true);
-        //var parameters = "userName=XXX";  
-        //xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
+        //var parameters = "userName=XXX";
+        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        //xhr.setRequestHeader('Content-Type', 'application/json; charset=utf-8');
         xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest'); // Utilisé par les filtres ASP pour restreindre l'utilisation de méthodes de contrôleurs
         xhr.send(content);
         //xhr.send("id=manasm&lname=mohaptra");
