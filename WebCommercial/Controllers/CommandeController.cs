@@ -79,26 +79,68 @@ namespace WebCommercial.Controllers
                 return HttpNotFound();
             }
         }
-
-        [Route("Commande/AjoutArticle")]
+        
+        [Authorize]
         [HttpPost]
-        public ActionResult AjoutArticle()  
+        public ActionResult AjouterArticle()  
         {
             try
             {
-                int id = int.Parse(Request["id"]);
-                int noart = int.Parse(Request["noart"]);
-                int quantite = int.Parse(Request["quantite"]);
-                string livree = Request["livree"];
+                int id = int.Parse(Request["NoCommandeArt"]);
+                int noart = int.Parse(Request["NoArt"]);
+                int quantite = int.Parse(Request["QuantiteArt"]);
+                string livree = Request["Livree"];
                 Article art = new Article();
                 art.NoArticle = noart;
                 Commande.addArticleInCommande(id, new ArticleCommande(art, quantite, livree));
 
-                return Json("{true}");
+                return RedirectToAction("Modifier", new { id= id });
             }
             catch (MonException e)
             {
-                return null;
+                return View("Error");
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult ModifierArticle()
+        {
+            try
+            {
+                int id = int.Parse(Request["NoCommandeArt"]);
+                int noart = int.Parse(Request["NoArt"]);
+                int quantite = int.Parse(Request["QuantiteArt"]);
+                string livree = Request["Livree"];
+                Article art = new Article();
+                art.NoArticle = noart;
+                Commande.updateArticleInCommande(id, new ArticleCommande(art, quantite, livree));
+
+                return RedirectToAction("Modifier", new { id = id });
+            }
+            catch (MonException e)
+            {
+                return View("Error");
+
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult SupprimerArticle()
+        {
+            try
+            {
+                int id = int.Parse(Request["NoCommandeArt"]);
+                int noart = int.Parse(Request["NoArt"]);
+                Commande.deleteArticleInCommande(id, noart);
+
+                return RedirectToAction("Modifier", new { id = id });
+            }
+            catch (MonException e)
+            {
+                return View("Error");
+
             }
         }
 
@@ -121,6 +163,94 @@ namespace WebCommercial.Controllers
             catch (MonException e)
             {
                 return HttpNotFound();
+            }
+        }
+
+        [Authorize]
+        public ActionResult Ajouter()
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (String no in Vendeur.LectureNoVendeurs())
+            {
+                items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no });
+            }
+            ViewBag.NoVendeurs = items;
+
+            items = new List<SelectListItem>();
+            foreach (String no in Clientel.LectureNoClients())
+            {
+                items.Add(new SelectListItem { Text = "Client N°" + no, Value = no });
+            }
+            ViewBag.NoClients = items;
+
+            items = new List<SelectListItem>();
+            foreach (Article art in Article.getArticles())
+            {
+                items.Add(new SelectListItem { Text = art.NoArticle + "/;/" + art.Libelle + "/;/" + art.Prix, Value = art.NoArticle.ToString() });
+            }
+            ViewBag.Articles = items;
+
+            try
+            {
+                ViewBag.Title = "Ajouter une commande";
+
+                return View();
+            }
+            catch (MonException e)
+            {
+                return HttpNotFound();
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public ActionResult Ajouter(Commande uneCom)
+        {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (String no in Vendeur.LectureNoVendeurs())
+            {
+                if (int.Parse(no) == uneCom.NoVendeur)
+                {
+                    items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no, Selected = true });
+                }
+                else
+                {
+                    items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no });
+                }
+            }
+            ViewBag.NoVendeurs = items;
+
+            items = new List<SelectListItem>();
+            foreach (String no in Clientel.LectureNoClients())
+            {
+                if (int.Parse(no) == uneCom.NoClient)
+                {
+                    items.Add(new SelectListItem { Text = "Client N°" + no, Value = no, Selected = true });
+                }
+                else
+                {
+                    items.Add(new SelectListItem { Text = "Client N°" + no, Value = no });
+                }
+            }
+            ViewBag.NoClients = items;
+
+            items = new List<SelectListItem>();
+            foreach (Article art in Article.getArticles())
+            {
+                items.Add(new SelectListItem { Text = art.NoArticle + "/;/" + art.Libelle + "/;/" + art.Prix, Value = art.NoArticle.ToString() });
+            }
+            ViewBag.Articles = items;
+
+            try
+            {
+                int id = Commande.insertCommande(uneCom);
+
+                return RedirectToAction("Modifier", new { id = id });
+            }
+            catch (MonException e)
+            {
+                ViewBag.Title = "Ajouter une commande";
+                return View();
             }
         }
     }

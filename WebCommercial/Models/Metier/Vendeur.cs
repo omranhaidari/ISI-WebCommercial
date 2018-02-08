@@ -58,6 +58,7 @@ namespace WebCommercial.Models.Metier
         }
 
         [Display(Name = "Date d'embauche Vendeur")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "La date doit être valide")]
         public DateTime DateEmbauche
         {

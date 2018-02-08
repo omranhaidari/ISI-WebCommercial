@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using WebCommercial.Models.MesExceptions;
@@ -248,11 +249,12 @@ namespace WebCommercial.Models.Metier
         public static void updateArticle(Article unArt)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un article.", "Article.update()");
+            Debug.WriteLine("Pirx : " + unArt.prix);
             String requete = "UPDATE Articles SET " +
                                   "LIB_ARTICLE = '" + unArt.libelle + "'" +
-                                  ", QTE_DISPO = '" + unArt.qte + "'" +
-                                  ", VILLE_ART = '" + unArt.villeArt + "'" + "'" +
-                                  ", PRIX_ART = '" + unArt.prix + "'" +
+                                  ", QTE_DISPO = " + unArt.qte +
+                                  ", VILLE_ART = '" + unArt.villeArt + "'" +
+                                  ", PRIX_ART = " + (unArt.prix.ToString()).Replace(",",".") +
                                   ", INTERROMPU = '" + unArt.interr + "'" +
                                   " WHERE NO_ARTICLE = " + unArt.noArticle;
             try
@@ -275,9 +277,9 @@ namespace WebCommercial.Models.Metier
             Serreurs er = new Serreurs("Erreur sur la création d'un article.", "Article.insert()");
             String requete = "INSERT INTO Articles (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
                                     "('" + unArt.libelle + "'" +
-                                    ",'" + unArt.qte + "'" +
+                                    "," + unArt.qte +
                                     ",'" + unArt.villeArt + "'" +
-                                    ",'" + unArt.prix + "'" +
+                                    "," + (unArt.prix.ToString()).Replace(",", ".") +
                                     ",'" + unArt.interr + "')";
             try
             {

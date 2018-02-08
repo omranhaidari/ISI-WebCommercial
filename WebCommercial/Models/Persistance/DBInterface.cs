@@ -88,6 +88,29 @@ namespace WebCommercial.Models.Persistance
                     throw new MonException(uneException.Message, "Insertion", "SQL");
                 }
             }
+
+            public static int Insertion_Donnees(String requete, bool recupID)
+            {
+                MySqlConnection cnx = null;
+                try
+                {
+                    // On ouvre une transaction 
+                    cnx = Connexion.getInstance().getConnexion();
+                    MySqlTransaction OleTrans = cnx.BeginTransaction();
+                    MySqlCommand OleCmd = new MySqlCommand();
+                    OleCmd = cnx.CreateCommand();
+                    OleCmd.Transaction = OleTrans;
+                    OleCmd.CommandText = requete;
+                    OleCmd.ExecuteNonQuery();
+                    OleTrans.Commit();
+
+                    return (int)OleCmd.LastInsertedId;
+                }
+                catch (MySqlException uneException)
+                {
+                    throw new MonException(uneException.Message, "Insertion", "SQL");
+                }
+            }
         }
     }
 }

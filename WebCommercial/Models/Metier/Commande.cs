@@ -48,6 +48,7 @@ namespace WebCommercial.Models.Metier
         }
 
         [Display(Name = "Date de la commande")]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "La date doit être valide")]
         public DateTime DateCommande
         {
@@ -203,7 +204,7 @@ namespace WebCommercial.Models.Metier
         public static void deleteArticleInCommande(int id, int noArt)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
-            String requete = "DELETE FROM Details_cde WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + noArt;
+            String requete = "DELETE FROM Detail_cde WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + noArt;
             try
             {
                 DBInterface.Insertion_Donnees(requete);
@@ -221,11 +222,10 @@ namespace WebCommercial.Models.Metier
         public static void updateArticleInCommande(int id, ArticleCommande art)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
-            String requete = "UPDATE Details_cde SET " +
-                                  ", NO_ARTICLE = '" + art.Article.NoArticle + "'" +
-                                  ", QTE_CDEE = '" + art.QuantiteCommandee + "'" + "'" +
+            String requete = "UPDATE Detail_cde SET " +
+                                  " QTE_CDEE = " + art.QuantiteCommandee +
                                   ", LIVREE = '" + art.Livree + "'" +
-                                  " WHERE NO_COMMAND = " + id;
+                                  " WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + art.Article.NoArticle;
             try
             {
                 DBInterface.Insertion_Donnees(requete);
@@ -288,7 +288,7 @@ namespace WebCommercial.Models.Metier
             String requete = "UPDATE Commandes SET " +
                                   "NO_VENDEUR = " + uneCom.noVendeur +
                                   ", NO_CLIENT = " + uneCom.noClient +
-                                  //", DATE_CDE = '" + uneCom.dateCde + "'" +
+                                  ", DATE_CDE = '" + uneCom.dateCde.ToString("yyyy-MM-dd") + "'" +
                                   ", FACTURE = '" + uneCom.facture + "'" +
                                   " WHERE NO_COMMAND = " + uneCom.noCommande;
             try
@@ -308,17 +308,17 @@ namespace WebCommercial.Models.Metier
 
         }
 
-        public static void insertCommande(Commande uneCom)
+        public static int insertCommande(Commande uneCom)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'une commande.", "Commande.insert()");
-            String requete = "INSERT INTO Article (NO_VENDEUR, NO_CLIENT, DATE_CDE, FACTURE) VALUES " +
-                                    "('" + uneCom.noVendeur + "'" +
-                                    ",'" + uneCom.noClient + "'" +
-                                    ",'" + uneCom.dateCde + "'" +
+            String requete = "INSERT INTO Commandes (NO_VENDEUR, NO_CLIENT, DATE_CDE, FACTURE) VALUES " +
+                                    "(" + uneCom.noVendeur +
+                                    "," + uneCom.noClient +
+                                    ",'" + uneCom.dateCde.ToString("yyyy-MM-dd") + "'" +
                                     ",'" + uneCom.facture + "')";
             try
             {
-                DBInterface.Insertion_Donnees(requete);
+                return DBInterface.Insertion_Donnees(requete, true);
             }
             catch (MonException erreur)
             {

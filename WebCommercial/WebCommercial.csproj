@@ -286,6 +286,11 @@
     <Content Include="Views\Commande\Modifier.cshtml" />
     <Content Include="Views\Commande\InformationsCommande.cshtml" />
     <Content Include="Views\Commande\ArticleCommandeModal.cshtml" />
+    <Content Include="Views\Shared\ConfirmationModal.cshtml" />
+    <Content Include="Views\Commande\Ajouter.cshtml" />
+    <Content Include="Views\Article\Ajouter.cshtml" />
+    <Content Include="Views\Article\Modifier.cshtml" />
+    <Content Include="Views\Article\InformationsArticle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

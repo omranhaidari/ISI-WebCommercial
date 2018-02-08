@@ -10,9 +10,9 @@
     <td> @Html.DisplayFor(modelItem => Model.Articles.Count) </td>
 
     <td>@Html.DisplayFor(modelItem => Model.Facture)</td>
-    @{ 
+    @{
         String chaine = "";
-        foreach(var artic in Model.Articles)
+        foreach (var artic in Model.Articles)
         {
             chaine += artic.Article.NoArticle + ";";
             chaine += artic.Article.Libelle + ";";
@@ -20,16 +20,20 @@
             chaine += artic.QuantiteCommandee + "/";
         }
     }
-    <td><button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#commandeDetailsModal"
-                data-noCom="@Model.NoCommande" data-dateCom="@Model.DateCommande" data-listArticles="@chaine">Détails</button></td>
+    <td>
+        <button type="button" class="btn btn-block btn-primary" data-toggle="modal" data-target="#commandeDetailsModal"
+                data-noCom="@Model.NoCommande" data-dateCom="@Model.DateCommande" data-listArticles="@chaine">
+            Détails
+        </button>
+    </td>
     <td style="text-align:center;">
         <span>
             @Html.ActionLink("  ", "Modifier", "Commande", new { id = Model.NoCommande }, new { @class = "btn btn-block btn-default btn-primary glyphicon glyphicon glyphicon-pencil" })
         </span>
     </td>
-    <td style="text-align:center;">
-        <span>
-            @Html.ActionLink("  ", "Supprimer", "Commande", new { id = Model.NoCommande }, new { @class = "btn btn-block btn-default btn-danger glyphicon glyphicon glyphicon-remove" })
-        </span>
-    </td>
+    @*<td style="text-align:center;">
+            <span>
+                @Html.ActionLink("  ", "Supprimer", "Commande", new { id = Model.NoCommande }, new { @class = "btn btn-block btn-default btn-danger glyphicon glyphicon glyphicon-remove" })
+            </span>
+        </td>*@
 </tr>

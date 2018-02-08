@@ -1,0 +1,95 @@
+﻿
+@model  WebCommercial.Models.Metier.Article
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+	<h4>Client</h4>
+	<hr />
+	@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @if(Model != null) {
+	<div class="form-group">
+		@Html.LabelFor(model => model.NoArticle, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.NoArticle, new { htmlAttributes = new { @class = "form-control", @disabled = "" } })
+			@Html.ValidationMessageFor(model => model.NoArticle, "", new { @class = "text-danger" })
+			<input name="NoArticle" type="HIDDEN" value=@(@Model.NoArticle) id="NoArticle" />
+		</div>
+	</div>
+    }
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.Libelle, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.Libelle, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Libelle, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.Quantite, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.Quantite, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Quantite, "", new { @class = "text-danger" })
+		</div>
+	</div>
+
+	<div class="form-group">
+		@Html.LabelFor(model => model.VilleArticle, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.VilleArticle, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.VilleArticle, "", new { @class = "text-danger" })
+		</div>
+	</div>
+	<div class="form-group">
+		@Html.LabelFor(model => model.Prix, htmlAttributes: new { @class = "control-label col-md-2" })
+		<div class="col-md-10">
+			@Html.EditorFor(model => model.Prix, new { htmlAttributes = new { @class = "form-control" } })
+			@Html.ValidationMessageFor(model => model.Prix, "", new { @class = "text-danger" })
+		</div>
+	</div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Interrompu, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @if (Model != null && Model.Interrompu == "T")
+        {
+            <div class="form-check radio-inline">
+                <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T" checked required>
+                <label class="form-check-label" for="Facture1">Oui</label>
+            </div>
+            <div class="form-check radio-inline">
+                <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F" required>
+                <label class="form-check-label" for="Facture2">Non</label>
+            </div>
+    }
+    else
+    {
+        <div class="form-check radio-inline">
+            <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T" required>
+            <label class="form-check-label" for="Facture1">Oui</label>
+        </div>
+        <div class="form-check radio-inline">
+            <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F" checked required>
+            <label class="form-check-label" for="Facture2">Non</label>
+        </div>
+}
+            @Html.ValidationMessageFor(model => model.Interrompu, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+	<div class="form-group">
+		<div class="row">
+			<div class="col-md-offset-2 col-md-2">
+				<input type="submit" value="Enregistrer" class="btn btn-success" />
+			</div>
+			<div class="col-md-2 col-sm-2">
+				@Html.ActionLink("Annuler", "Index", "Article", new { @class = "btn btn-default btn-primary" })
+			</div>
+		</div>
+	</div>
+</div>
+
+}

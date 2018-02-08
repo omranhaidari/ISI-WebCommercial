@@ -1,0 +1,22 @@
+﻿@model  WebCommercial.Models.Metier.Commande
+
+
+@{
+	Layout = "~/Views/Shared/_LayoutCommercial.cshtml";
+}
+<div class="container">
+	<div class="col-md-10 col-sm-10">
+		<div class="blanc">
+			<h1>Ajouter une commande</h1>
+		</div>
+
+		<div class="row">
+			<div class="col-md-6 col-md-offset-6 col-sm-6 col-sm-offset-6">
+				@Html.ActionLink("Retourner à la liste des commandes", "Index", "Commande", new { @class = "btn btn-default btn-primary" })
+			</div>
+		</div>
+
+		@Html.Partial("InformationsCommande", Model)
+
+	</div>
+</div>

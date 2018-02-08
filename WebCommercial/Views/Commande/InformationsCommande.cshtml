@@ -5,11 +5,13 @@
 {
     @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        <h4>Client</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div class="form-horizontal">
+    <h4>Client</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
+    @if (Model != null)
+    {
         <div class="form-group">
             @Html.LabelFor(model => model.NoCommande, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -17,11 +19,12 @@
                 @Html.ValidationMessageFor(model => model.NoCommande, "", new { @class = "text-danger" })
             </div>
         </div>
+    }
 
         <div class="form-group">
             @Html.LabelFor(model => model.NoVendeur, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("NoVendeur", ViewBag.NoVendeurs as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("NoVendeur", ViewBag.NoVendeurs as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", required = "true" })
                 @Html.ValidationMessageFor(model => model.NoVendeur, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +32,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.NoClient, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("NoClient", ViewBag.NoClients as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control" })
+                @Html.DropDownList("NoClient", ViewBag.NoClients as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", required = "true" })
                 @Html.ValidationMessageFor(model => model.NoClient, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,32 +40,32 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateCommande, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCommande, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateCommande, new { htmlAttributes = new { @class = "form-control", placeholder="JJ/MM/AAAA HH:MM:SS", pattern="[0-3][0-9]/[0-1][0-9]/[0-9]{4}[ 0-9]." } })
                 @Html.ValidationMessageFor(model => model.DateCommande, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
             @Html.LabelFor(model => model.Facture, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @if (Model.Facture == "T")
+                @if (Model != null && Model.Facture == "T")
                 {
                     <div class="form-check radio-inline">
-                        <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T" checked>
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T" checked required>
                         <label class="form-check-label" for="Facture1">Oui</label>
                     </div>
                     <div class="form-check radio-inline">
-                        <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F">
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F" required>
                         <label class="form-check-label" for="Facture2">Non</label>
                     </div>
                 }
                 else
                 {
                     <div class="form-check radio-inline">
-                        <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T">
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture1" value="T" required>
                         <label class="form-check-label" for="Facture1">Oui</label>
                     </div>
                     <div class="form-check radio-inline">
-                        <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F" checked>
+                        <input class="form-check-input" type="radio" name="Facture" id="Facture2" value="F" checked required>
                         <label class="form-check-label" for="Facture2">Non</label>
                     </div>
                 }
