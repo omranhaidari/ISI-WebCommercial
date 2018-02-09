@@ -1,0 +1,90 @@
+﻿
+@model  WebCommercial.Models.Metier.Vendeur
+
+@using (Html.BeginForm())
+{
+	@Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <h4>Vendeur</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @if (Model != null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(model => model.NoVendeur, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.NoVendeur, new { htmlAttributes = new { @class = "form-control", @readonly = "" } })
+                <input name="NoVendeur" type="HIDDEN" value=@(@Model.NoVendeur) id="NoVendeur" />
+            </div>
+        </div>
+    }
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NoChef, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("NoChef", ViewBag.NoVendeurs as IEnumerable<SelectListItem>, htmlAttributes: new { @class = "form-control", required = "true" })
+            @Html.ValidationMessageFor(model => model.NoChef, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.NomVendeur, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NomVendeur, new { htmlAttributes = new { @class = "form-control", required = "true" } })
+            @Html.ValidationMessageFor(model => model.NomVendeur, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.PrenomVendeur, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.PrenomVendeur, new { htmlAttributes = new { @class = "form-control", required = "true" } })
+            @Html.ValidationMessageFor(model => model.PrenomVendeur, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.DateEmbauche, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.DateEmbauche, new { htmlAttributes = new { @class = "form-control", pattern = "[0-3][0-9]/[0-1][0-9]/[0-9]{4}", title = "Date sous la forme : JJ/MM/AAAA", required = "true" } })
+
+            @Html.ValidationMessageFor(model => model.DateEmbauche, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.VilleVendeur, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.VilleVendeur, new { htmlAttributes = new { @class = "form-control", required = "true" } })
+            @Html.ValidationMessageFor(model => model.VilleVendeur, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Salaire, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Salaire, new { htmlAttributes = new { @class = "form-control", pattern = "[0-9]+.[0-9]+", title = "Uniquement des chiffres", required = "true" } })
+            @Html.ValidationMessageFor(model => model.Salaire, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Commission, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Commission, new { htmlAttributes = new { @class = "form-control", pattern = "[0-9]{1,6}.[0-9]+", title = "Uniquement des chiffres", required = "true" } })
+            @Html.ValidationMessageFor(model => model.Commission, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-offset-2 col-md-2">
+                <input type="submit" value="Enregistrer" class="btn btn-success" />
+            </div>
+            <div class="col-md-2 col-sm-2">
+                @Html.ActionLink("Annuler", "Index", "Vendeur", new { @class = "btn btn-default btn-primary" })
+            </div>
+        </div>
+    </div>
+</div>
+
+}

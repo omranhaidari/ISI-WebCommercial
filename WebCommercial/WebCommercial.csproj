@@ -291,6 +291,9 @@
     <Content Include="Views\Article\Ajouter.cshtml" />
     <Content Include="Views\Article\Modifier.cshtml" />
     <Content Include="Views\Article\InformationsArticle.cshtml" />
+    <Content Include="Views\Vendeur\Ajouter.cshtml" />
+    <Content Include="Views\Vendeur\InformationsVendeur.cshtml" />
+    <Content Include="Views\Vendeur\Modifier.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -40,7 +40,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateCommande, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateCommande, new { htmlAttributes = new { @class = "form-control", placeholder="JJ/MM/AAAA HH:MM:SS", pattern="[0-3][0-9]/[0-1][0-9]/[0-9]{4}[ 0-9]." } })
+                @Html.EditorFor(model => model.DateCommande, new { htmlAttributes = new { @class = "form-control", placeholder="JJ/MM/AAAA", title= "JJ/MM/AAAA", pattern="[0-3][0-9]/[0-1][0-9]/[0-9]{4}" } })
                 @Html.ValidationMessageFor(model => model.DateCommande, "", new { @class = "text-danger" })
             </div>
         </div>

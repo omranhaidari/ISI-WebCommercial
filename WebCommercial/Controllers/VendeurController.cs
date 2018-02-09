@@ -89,6 +89,13 @@ namespace WebCommercial.Controllers
         [Authorize]
         public ActionResult Ajouter()
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (String no in Vendeur.LectureNoVendeurs())
+            {
+                items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no });
+            }
+            ViewBag.NoVendeurs = items;
+
             try
             {
                 ViewBag.Title = "Ajouter un vendeur";
@@ -105,15 +112,21 @@ namespace WebCommercial.Controllers
         [HttpPost]
         public ActionResult Ajouter(Vendeur unVend)
         {
+            ViewBag.Title = "Ajouter un vendeur";
             try
             {
                 Vendeur.insertVendeur(unVend);
-                ViewBag.Title = "Ajouter un vendeur";
 
                 return RedirectToAction("Index");
             }
             catch (MonException e)
             {
+                List<SelectListItem> items = new List<SelectListItem>();
+                foreach (String no in Vendeur.LectureNoVendeurs())
+                {
+                    items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no });
+                }
+                ViewBag.NoVendeurs = items;
                 return View(unVend);
             }
         }
@@ -122,6 +135,12 @@ namespace WebCommercial.Controllers
         [Authorize]
         public ActionResult Modifier(int id)
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (String no in Vendeur.LectureNoVendeurs())
+            {
+                items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no });
+            }
+            ViewBag.NoVendeurs = items;
             try
             {
                 Vendeur unVend = Vendeur.getVendeur(id);
@@ -139,6 +158,12 @@ namespace WebCommercial.Controllers
         [HttpPost]
         public ActionResult Modifier(Vendeur unVend)
         {
+            List<SelectListItem> items = new List<SelectListItem>();
+            foreach (String no in Vendeur.LectureNoVendeurs())
+            {
+                items.Add(new SelectListItem { Text = "Vendeur N°" + no, Value = no });
+            }
+            ViewBag.NoVendeurs = items;
             if (!ModelState.IsValid)
             {
                 // Si le client modifié n'est pas valide, on affiche un message d'erreur à l'utilisateur

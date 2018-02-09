@@ -240,13 +240,13 @@ namespace WebCommercial.Models.Metier
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un vendeur.", "Vendeur.update()");
             String requete = "UPDATE Vendeur SET " +
-                                  "NO_VEND_CHEF_EQ = '" + unVend.NoChef + "'" +
+                                  "NO_VEND_CHEF_EQ = " + unVend.NoChef +
                                   ", NOM_VEND = '" + unVend.NomVendeur + "'" +
                                   ", PRENOM_VEND = '" + unVend.PrenomVendeur + "'" +
                                   ", DATE_EMBAU = '" + unVend.DateEmbauche.ToString("yyyy/MM/dd") + "'" +
                                   ", VILLE_VEND = '" + unVend.VilleVendeur + "'" +
-                                  ", SALAIRE_VEND = '" + unVend.Salaire + "'" +
-                                  ", COMMISSION = '" + unVend.Commission + "'" +
+                                  ", SALAIRE_VEND = " + unVend.Salaire.ToString().Replace(",", ".") +
+                                  ", COMMISSION = " + unVend.Commission.ToString().Replace(",", ".") +
                                   " WHERE NO_VENDEUR = " + unVend.NoVendeur;
             try
             {
@@ -267,13 +267,13 @@ namespace WebCommercial.Models.Metier
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un vendeur.", "Vendeur.insert()");
             String requete = "INSERT INTO Vendeur (NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND, DATE_EMBAU, VILLE_VEND, SALAIRE_VEND, COMMISSION) VALUES " +
-                                    "('" + unVend.NoChef + "'" +
+                                    "(" + unVend.NoChef +
                                     ",'" + unVend.NomVendeur + "'" +
                                     ",'" + unVend.PrenomVendeur + "'" +
                                     ",'" + unVend.DateEmbauche.ToString("yyyy/MM/dd") + "'" +
                                     ",'" + unVend.VilleVendeur + "'" +
-                                    ",'" + unVend.Salaire + "'" +
-                                    ",'" + unVend.Commission + "')";
+                                    "," + unVend.Salaire.ToString().Replace(",", ".") +
+                                    "," + unVend.Commission.ToString().Replace(",", ".") + ")";
             try
             {
                 DBInterface.Insertion_Donnees(requete);
