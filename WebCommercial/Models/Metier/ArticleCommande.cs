@@ -76,7 +76,7 @@ namespace WebCommercial.Models.Metier
     /*    public static void updateArticleCommande(ArticleCommande unArt)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un article.", "Article.update()");
-            String requete = "UPDATE Article SET " +
+            String requete = "UPDATE article SET " +
                                   "LIB_ARTICLE = '" + unArt.libelle + "'" +
                                   ", QTE_DISPO = '" + unArt.qte + "'" +
                                   ", VILLE_ART = '" + unArt.villeArt + "'" + "'" +
@@ -101,7 +101,7 @@ namespace WebCommercial.Models.Metier
         public static void insertArticle(Article unArt)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un article.", "Article.insert()");
-            String requete = "INSERT INTO Article (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
+            String requete = "INSERT INTO article (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
                                     "('" + unArt.libelle + "'" +
                                     ",'" + unArt.qte + "'" +
                                     ",'" + unArt.villeArt + "'" +

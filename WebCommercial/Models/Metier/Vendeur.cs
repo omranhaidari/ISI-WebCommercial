@@ -134,7 +134,7 @@ namespace WebCommercial.Models.Metier
 
                 mysql = "SELECT NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND,";
                 mysql += "DATE_EMBAU, VILLE_VEND, SALAIRE_VEND, COMMISSION ";
-                mysql += "FROM Vendeur WHERE NO_VENDEUR = " + numVen;
+                mysql += "FROM vendeur WHERE NO_VENDEUR = " + numVen;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
@@ -170,7 +170,7 @@ namespace WebCommercial.Models.Metier
             try
             {
 
-                String mysql = "SELECT DISTINCT NO_VENDEUR FROM Vendeur ORDER BY NO_VENDEUR";
+                String mysql = "SELECT DISTINCT NO_VENDEUR FROM vendeur ORDER BY NO_VENDEUR";
                 dt = DBInterface.Lecture(mysql, er);
 
                 foreach (DataRow dataRow in dt.Rows)
@@ -201,7 +201,7 @@ namespace WebCommercial.Models.Metier
             try
             {
                 String mysql = "SELECT NO_VENDEUR,NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND,DATE_EMBAU," +
-                               "VILLE_VEND,SALAIRE_VEND,COMMISSION FROM Vendeur ORDER BY NO_VENDEUR";
+                               "VILLE_VEND,SALAIRE_VEND,COMMISSION FROM vendeur ORDER BY NO_VENDEUR";
 
                 dt = DBInterface.Lecture(mysql, er);
 
@@ -239,7 +239,7 @@ namespace WebCommercial.Models.Metier
         public static void updateVendeur(Vendeur unVend)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un vendeur.", "Vendeur.update()");
-            String requete = "UPDATE Vendeur SET " +
+            String requete = "UPDATE vendeur SET " +
                                   "NO_VEND_CHEF_EQ = " + unVend.NoChef +
                                   ", NOM_VEND = '" + unVend.NomVendeur + "'" +
                                   ", PRENOM_VEND = '" + unVend.PrenomVendeur + "'" +
@@ -266,7 +266,7 @@ namespace WebCommercial.Models.Metier
         public static void insertVendeur(Vendeur unVend)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un vendeur.", "Vendeur.insert()");
-            String requete = "INSERT INTO Vendeur (NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND, DATE_EMBAU, VILLE_VEND, SALAIRE_VEND, COMMISSION) VALUES " +
+            String requete = "INSERT INTO vendeur (NO_VEND_CHEF_EQ, NOM_VEND, PRENOM_VEND, DATE_EMBAU, VILLE_VEND, SALAIRE_VEND, COMMISSION) VALUES " +
                                     "(" + unVend.NoChef +
                                     ",'" + unVend.NomVendeur + "'" +
                                     ",'" + unVend.PrenomVendeur + "'" +

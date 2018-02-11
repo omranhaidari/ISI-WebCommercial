@@ -118,7 +118,7 @@ namespace WebCommercial.Models.Metier
 
                 mysql = "SELECT NO_VENDEUR,";
                 mysql += "NO_CLIENT, DATE_CDE, FACTURE ";
-                mysql += "FROM Commandes WHERE NO_COMMAND = " + noCom;
+                mysql += "FROM commandes WHERE NO_COMMAND = " + noCom;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
@@ -152,7 +152,7 @@ namespace WebCommercial.Models.Metier
             Serreurs er = new Serreurs("Erreur sur lecture des articles de la commande.", "ArticlesList.getArticles()");
             try
             {
-                String mysql = "SELECT NO_ARTICLE, QTE_CDEE, LIVREE FROM Detail_cde " +
+                String mysql = "SELECT NO_ARTICLE, QTE_CDEE, LIVREE FROM detail_cde " +
                                "WHERE NO_COMMAND = " + noCom + " ORDER BY NO_ARTICLE";
 
                 dt = DBInterface.Lecture(mysql, er);
@@ -182,7 +182,7 @@ namespace WebCommercial.Models.Metier
         public static void addArticleInCommande(int id, ArticleCommande art)
         {
             Serreurs er = new Serreurs("Erreur sur l'insertion d'un article dans une commande.", "Commande.insertArticle()");
-            String requete = "INSERT INTO Detail_cde (NO_COMMAND, NO_ARTICLE, QTE_CDEE, LIVREE) VALUES " +
+            String requete = "INSERT INTO detail_cde (NO_COMMAND, NO_ARTICLE, QTE_CDEE, LIVREE) VALUES " +
                                     "('" + id + "'" +
                                     ",'" + art.Article.NoArticle + "'" +
                                     ",'" + art.QuantiteCommandee + "'" +
@@ -204,7 +204,7 @@ namespace WebCommercial.Models.Metier
         public static void deleteArticleInCommande(int id, int noArt)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
-            String requete = "DELETE FROM Detail_cde WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + noArt;
+            String requete = "DELETE FROM detail_cde WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + noArt;
             try
             {
                 DBInterface.Insertion_Donnees(requete);
@@ -222,7 +222,7 @@ namespace WebCommercial.Models.Metier
         public static void updateArticleInCommande(int id, ArticleCommande art)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
-            String requete = "UPDATE Detail_cde SET " +
+            String requete = "UPDATE detail_cde SET " +
                                   " QTE_CDEE = " + art.QuantiteCommandee +
                                   ", LIVREE = '" + art.Livree + "'" +
                                   " WHERE NO_COMMAND = " + id + " and NO_ARTICLE = " + art.Article.NoArticle;
@@ -249,7 +249,7 @@ namespace WebCommercial.Models.Metier
             try
             {
                 String mysql = "SELECT NO_COMMAND, NO_VENDEUR, NO_CLIENT," +
-                               "DATE_CDE, FACTURE FROM Commandes ORDER BY NO_COMMAND";
+                               "DATE_CDE, FACTURE FROM commandes ORDER BY NO_COMMAND";
 
                 dt = DBInterface.Lecture(mysql, er);
 
@@ -285,7 +285,7 @@ namespace WebCommercial.Models.Metier
         public static void updateCommande(Commande uneCom)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'une commande.", "Commande.update()");
-            String requete = "UPDATE Commandes SET " +
+            String requete = "UPDATE commandes SET " +
                                   "NO_VENDEUR = " + uneCom.noVendeur +
                                   ", NO_CLIENT = " + uneCom.noClient +
                                   ", DATE_CDE = '" + uneCom.dateCde.ToString("yyyy-MM-dd") + "'" +
@@ -311,7 +311,7 @@ namespace WebCommercial.Models.Metier
         public static int insertCommande(Commande uneCom)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'une commande.", "Commande.insert()");
-            String requete = "INSERT INTO Commandes (NO_VENDEUR, NO_CLIENT, DATE_CDE, FACTURE) VALUES " +
+            String requete = "INSERT INTO commandes (NO_VENDEUR, NO_CLIENT, DATE_CDE, FACTURE) VALUES " +
                                     "(" + uneCom.noVendeur +
                                     "," + uneCom.noClient +
                                     ",'" + uneCom.dateCde.ToString("yyyy-MM-dd") + "'" +

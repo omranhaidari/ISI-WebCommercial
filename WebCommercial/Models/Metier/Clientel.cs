@@ -224,7 +224,7 @@ namespace WebCommercial.Models.Metier
         public static void updateClient(Clientel unCli)
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un client.", "Client.update()");
-            String requete = "UPDATE Clientel SET " +
+            String requete = "UPDATE clientel SET " +
                                   "SOCIETE = '" + unCli.Societe + "'" +
                                   ", NOM_CL = '" + unCli.NomCl + "'" +
                                   ", PRENOM_CL = '" + unCli.PrenomCl + "'" +
@@ -250,7 +250,7 @@ namespace WebCommercial.Models.Metier
         public static void insertClient(Clientel unCli)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un client.", "Client.insert()");
-            String requete = "INSERT INTO Clientel (no_client, societe, nom_cl, prenom_cl, adresse_cl, ville_cl, code_post_cl) VALUES " +
+            String requete = "INSERT INTO clientel (no_client, societe, nom_cl, prenom_cl, adresse_cl, ville_cl, code_post_cl) VALUES " +
                                     "('" + unCli.NoClient + "'" +
                                     ",'" + unCli.Societe + "'" +
                                     ",'" + unCli.NomCl + "'" +

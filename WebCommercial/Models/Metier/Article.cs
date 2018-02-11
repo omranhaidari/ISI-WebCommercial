@@ -147,7 +147,7 @@ namespace WebCommercial.Models.Metier
 
                 mysql = "SELECT LIB_ARTICLE, QTE_DISPO,";
                 mysql += "VILLE_ART, PRIX_ART, INTERROMPU ";
-                mysql += "FROM Articles WHERE NO_ARTICLE = " + noArt;
+                mysql += "FROM articles WHERE NO_ARTICLE = " + noArt;
                 dt = DBInterface.Lecture(mysql, er);
 
                 if (dt.IsInitialized && dt.Rows.Count > 0)
@@ -185,7 +185,7 @@ namespace WebCommercial.Models.Metier
             {
 
                 mysql = "SELECT NO_COMPOSANT, QTE_COMPOSANT ";
-                mysql += "FROM Compose WHERE NO_COMPOSE = " + noArt;
+                mysql += "FROM compose WHERE NO_COMPOSE = " + noArt;
                 dt = DBInterface.Lecture(mysql, er);
 
                 foreach (DataRow dataRow in dt.Rows)
@@ -213,7 +213,7 @@ namespace WebCommercial.Models.Metier
             try
             {
                 String mysql = "SELECT NO_ARTICLE, LIB_ARTICLE, QTE_DISPO," +
-                               "VILLE_ART, PRIX_ART, INTERROMPU FROM Articles ORDER BY NO_ARTICLE";
+                               "VILLE_ART, PRIX_ART, INTERROMPU FROM articles ORDER BY NO_ARTICLE";
 
                 dt = DBInterface.Lecture(mysql, er);
 
@@ -250,7 +250,7 @@ namespace WebCommercial.Models.Metier
         {
             Serreurs er = new Serreurs("Erreur sur l'écriture d'un article.", "Article.update()");
             Debug.WriteLine("Pirx : " + unArt.prix);
-            String requete = "UPDATE Articles SET " +
+            String requete = "UPDATE articles SET " +
                                   "LIB_ARTICLE = '" + unArt.libelle + "'" +
                                   ", QTE_DISPO = " + unArt.qte +
                                   ", VILLE_ART = '" + unArt.villeArt + "'" +
@@ -275,7 +275,7 @@ namespace WebCommercial.Models.Metier
         public static void insertArticle(Article unArt)
         {
             Serreurs er = new Serreurs("Erreur sur la création d'un article.", "Article.insert()");
-            String requete = "INSERT INTO Articles (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
+            String requete = "INSERT INTO articles (LIB_ARTICLE, QTE_DISPO, VILLE_ART, PRIX_ART, INTERROMPU) VALUES " +
                                     "('" + unArt.libelle + "'" +
                                     "," + unArt.qte +
                                     ",'" + unArt.villeArt + "'" +
